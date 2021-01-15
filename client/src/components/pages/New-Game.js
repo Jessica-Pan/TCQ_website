@@ -23,8 +23,12 @@ class NewGame extends Component {
     }
 
     handleChangeNumQ = (event) => {
+        let numQuestions = parseInt(event.target.value);
+        if (isNaN(numQuestions)){
+          numQuestions = 1;
+        }
         this.setState({
-            numQuestions: event.target.value,
+            numQuestions: numQuestions
         });
     }
 
@@ -48,13 +52,10 @@ class NewGame extends Component {
 
   
     render() {
-        // i can't find a better way to do this, but there has to be one. 
-      let questionsInput= <QuestionInput id="1"/>;
-      if(this.state.numQuestions == 2){
-        questionsInput = <> <QuestionInput id="1"/> <QuestionInput id="2" /> </>;
-      }else if (this.state.numQuestions == 3){
-        questionsInput = <> <QuestionInput id="1"/> <QuestionInput id="2" /> <QuestionInput id="3" /> </>;
-      }
+      console.log(this.state.numQuestions);
+      let questionInputs = [...Array(this.state.numQuestions).keys()].map((num) =>
+        <QuestionInput id={num + 1}/>
+      );
       return (
         <>
           <h1 className="header"> New Game </h1>
@@ -70,7 +71,7 @@ class NewGame extends Component {
                     />
               </span>
           </div>
-          {questionsInput}
+          {questionInputs}
           <div className="u-flex-justifyCenter top-margin">
           <span className="NewGame-button" onClick={this.handleClick}> 
             <text className="button-text">Set Game </text>
