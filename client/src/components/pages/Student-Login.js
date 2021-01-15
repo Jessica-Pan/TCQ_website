@@ -7,8 +7,30 @@ class StudentLogin extends Component {
     constructor(props) {
       super(props);
       // Initialize Default State
-      this.state = {};
+      this.state = {
+          inputedCode: "",
+          inputedTeam: ""
+      };
     }
+
+    handleClick = (event) => {
+        console.log("clicked");
+        console.log(`Team: ${this.state.inputedTeam}, Code: ${this.state.inputedCode}`);
+        this.props.setGameCode(this.state.inputedCode);
+    }
+
+    handleChangeName = (event) => {
+        this.setState({
+            inputedTeam: event.target.value,
+        });
+    }
+
+    handleChangeCode = (event) => {
+        this.setState({
+            inputedCode: event.target.value,
+        });
+    }
+
   
     render() {
       return (
@@ -20,17 +42,20 @@ class StudentLogin extends Component {
                     className = "login-textbox"
                     type="text"
                     placeholder="game code"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeCode}
                     />
             </div>
             <div className="login-div">
                 <input
                     className = "login-textbox"
                     type="text"
-                    placeholder="your name"
-                    onChange={this.handleChange}
+                    placeholder="your team"
+                    onChange={this.handleChangeName}
                     />
             </div>
+            <span className="button" onClick={this.handleClick}> 
+                <text className="button-text">Submit </text>
+            </span>
           </div>
         </>
       );

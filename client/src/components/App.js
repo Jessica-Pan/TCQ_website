@@ -20,8 +20,14 @@ class App extends Component {
   // makes props available in this component
   constructor(props) {
     super(props);
+    this.state = {
+      gameCode: ""
+    }
   }
 
+  setGameCode = (code) => {
+    this.setState({gameCode: code});
+  }
 
   render() {
     return (
@@ -29,7 +35,7 @@ class App extends Component {
         <Router>
           <Start path="/" />
           <AdminLogin path="/admin-login/" />
-          <StudentLogin path="/student-login/" />
+          <StudentLogin path="/student-login/" setGameCode={this.setGameCode}/>
           <NewGame path="/new-game/" />
           <NotFound default />
         </Router>
