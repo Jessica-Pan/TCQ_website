@@ -3,9 +3,9 @@ import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 
 import Start from "./pages/Start.js";
-import AdminLogin from "./pages/Admin-Login.js";
-import StudentLogin from "./pages/Student-Login.js"
-import NewGame from "./pages/New-Game.js"
+import AdminPages from "./modules/AdminPages.js";
+import StudentPages from "./modules/StudentPages.js";
+import NewGame from "./pages/New-Game.js";
 
 import "../utilities.css";
 
@@ -20,13 +20,7 @@ class App extends Component {
   // makes props available in this component
   constructor(props) {
     super(props);
-    this.state = {
-      gameCode: ""
-    }
-  }
-
-  setGameCode = (code) => {
-    this.setState({gameCode: code});
+    this.state = {};
   }
 
   render() {
@@ -34,8 +28,8 @@ class App extends Component {
       <>
         <Router>
           <Start path="/" />
-          <AdminLogin path="/admin-login/" />
-          <StudentLogin path="/student-login/" setGameCode={this.setGameCode}/>
+          <AdminPages path="/admin/" />
+          <StudentPages path="/student/" />
           <NewGame path="/new-game/" />
           <NotFound default />
         </Router>

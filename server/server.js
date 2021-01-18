@@ -31,11 +31,9 @@ const api = require("./api");
 const socketManager = require("./server-socket");
 
 // Server configuration below
-// TODO change connection URL after setting up your team database
-require('dotenv').config()
+require("dotenv").config();
 
 const mongoConnectionURL = process.env.MONGO_URL;
-// TODO change database name to the name you chose
 
 const databaseName = "Cluster0";
 
@@ -59,7 +57,7 @@ app.use(express.json());
 // set up a session, which will persist login data across requests
 app.use(
   session({
-    secret: "session-secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
