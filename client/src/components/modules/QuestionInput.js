@@ -28,15 +28,21 @@ class QuestionInput extends Component {
     return (
       <>
         <div>
-          <span className="header-text">
-            Question {this.props.id}:<text className="standard-text"> Time (in seconds): </text>
+          <span className="standard-text">
+            <h2 className="header-text"> Question {this.props.id}: </h2>
+            Time (in seconds):
             <input className="small-text-box" type="number" onChange={this.handleChangeTime} />
-            <text className="standard-text"> Points: </text>
+            Points:
             <input className="small-text-box" type="number" onChange={this.handleChangePoints} />
           </span>
-          <div className="input-field">
-            <text className="standard-text"> Question text: </text>
-            <input className="small-text-box" type="text" onChange={this.handleChangeQuestion} />
+          <div className="standard-text">
+            Question text:
+            <textarea
+              rows="10"
+              cols="80"
+              className="large-text-box"
+              onChange={this.handleChangeQuestion}
+            />
           </div>
         </div>
       </>

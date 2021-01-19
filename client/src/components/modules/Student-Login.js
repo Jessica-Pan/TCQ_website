@@ -51,7 +51,7 @@ class StudentLogin extends Component {
             />
           </div>
           <span className="button" onClick={this.handleSubmit}>
-            <text className="button-text">Submit </text>
+            <span className="button-text">Submit </span>
           </span>
         </div>
       </>

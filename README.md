@@ -17,6 +17,12 @@
 
 - New-Game: If you change the number of questions, it should erase what's written in the boxes already
 
+## Additional Features
+
+- uploading an image into the question
+- mulple parts per question
+- inputting a list of team names for a game
+
 ## What you need to change
 
 - Add a favicon to your website at the path client/dist/favicon.ico

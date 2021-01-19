@@ -50,7 +50,7 @@ class AdminLogin extends Component {
               <option value="grader">Grader</option>
             </select>
             <span className="button" onClick={this.handleSubmit}>
-              <text className="button-text">Submit </text>
+              <span className="button-text">Submit </span>
             </span>
           </div>
         </div>

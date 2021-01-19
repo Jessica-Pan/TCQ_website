@@ -26,13 +26,26 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
-// |------------------------------|
-// | write your API methods below!|
-// |------------------------------|
-
 // takes the game code as the parameter code
-router.get("/questions/", (req, res) => {
-  res.send("test question");
+router.post("/new-game/", (req, res) => {
+  const newGame = new Game({
+    gameCode: req.body.gameCode,
+    questions: req.body.questions,
+    times: req.body.times,
+    points: req.body.points,
+    questionPasswords: req.body.questionPasswords,
+    adminPassword: req.body.adminPassword,
+  });
+  newGame.save();
+  console.log("POSTED");
+});
+
+router.get("/game-for-students/", (req, res) => {
+  console.log(`QUERY: ${req.query.gameCode}`);
+  Game.find({ gameCode: req.query.gameCode }).then((results) => {
+    console.log(results);
+    res.send(results);
+  });
 });
 
 // anything else falls to this "not found" case
