@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const AnswerSchema = new mongoose.Schema({
   gameCode: String,
-  questions: Number,
+  questionNumber: Number,
   team: String,
-  content: String,
+  content: [String],
   startTime: String,
 });
 

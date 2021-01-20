@@ -25,8 +25,13 @@ class QuestionPage extends Component {
     };
   }
 
+  decreaseTimer = () => {
+    this.setState({ time: this.state.time - 1 });
+  };
+
   loggedIn = () => {
     this.setState({ authorized: true });
+    setInterval(this.decreaseTimer, 1000);
     // post the time here somehow
   };
 
