@@ -27,12 +27,31 @@ class QuestionPage extends Component {
   }
 
   decreaseTimer = () => {
+    console.log("timer:");
+    console.log(this.state.time);
+    if (this.state.time === 0) {
+      clearInterval(this.state.timer);
+      console.log(
+        "I'm posting this as the answer to question " +
+          this.props.questionNumber +
+          " for team " +
+          this.props.teamName
+      );
+      console.log(this.state.answers);
+      post("/api/student-answers/", {
+        gameCode: this.props.gameCode,
+        questionNum: this.props.questionNumber,
+        teamName: this.props.teamName,
+        content: this.state.answers,
+      });
+      this.props.nextQuestion();
+      this.setState({ time: -1, authorized: false, time: this.props.time });
+    }
     this.setState({ time: this.state.time - 1 });
   };
 
   loggedIn = () => {
-    this.setState({ authorized: true });
-    setInterval(this.decreaseTimer, 1000);
+    this.setState({ authorized: true, timer: setInterval(this.decreaseTimer, 1000) });
     post("/api/start-time/", {
       gameCode: this.props.gameCode,
       questionNum: this.props.questionNumber,

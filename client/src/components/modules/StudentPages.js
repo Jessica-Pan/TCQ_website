@@ -14,6 +14,7 @@ class StudentPages extends Component {
       teamName: "",
       studentName: "",
       onQuestion: 0,
+      done: false,
     };
   }
 
@@ -30,6 +31,10 @@ class StudentPages extends Component {
   };
 
   nextQuestion = () => {
+    if (this.state.onQuestion + 1 === this.state.game.questions.length) {
+      this.setState({ done: true });
+      console.log("SETTING DONE TO TRUE");
+    }
     this.setState({ onQuestion: this.state.onQuestion + 1 });
   };
 
@@ -42,6 +47,9 @@ class StudentPages extends Component {
       );
     }
     let i = this.state.onQuestion;
+    if (this.state.done) {
+      return <> You're done with the game! </>;
+    }
     return (
       <QuestionPage
         gameCode={this.state.game.gameCode}

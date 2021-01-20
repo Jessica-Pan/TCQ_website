@@ -66,13 +66,21 @@ router.post("/start-time/", (req, res) => {
 
 // given the gameCode, questionNum, teamName, content
 router.post("/student-answers/", (req, res) => {
+  console.log("adding the actual answer to the mix");
   Answer.findOne({
     gameCode: req.body.gameCode,
     questionNumber: req.body.questionNum,
     team: req.body.teamName,
   }).then((answer) => {
-    answer.content = req.body.content;
-    answer.save();
+    if (answer !== null) {
+      answer.content = req.body.content;
+      console.log("here is the updated answer with content");
+      console.log(answer);
+      answer.save();
+    } else {
+      console.log("Could not find the answer with these attributes:");
+      console.log(req.body.questionNum + " " + req.body.gameCode + " " + req.body.teamName);
+    }
   });
 });
 
