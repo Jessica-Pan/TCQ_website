@@ -3,6 +3,8 @@ import { Link } from "@reach/router";
 import "../../utilities.css";
 import "../pages/LoginPages.css";
 
+import { get, post } from "../../utilities.js";
+
 class AdminLogin extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,17 @@ class AdminLogin extends Component {
   handleSubmit = (event) => {
     console.log("clicked");
     console.log(`Code: ${this.state.gameCode}, Role: ${this.state.selected}`);
-    this.props.setGameCode(this.state.gameCode, this.state.selected[0]);
+    if (this.state.selected === undefined) {
+      alert("Please input a role first");
+    } else {
+      get("/api/game-info/", { gameCode: this.state.gameCode }).then((results) => {
+        if (this.state.password === results.adminPassword) {
+          this.props.setGame(results, this.state.selected[0]);
+        } else {
+          alert("That's not the right password");
+        }
+      });
+    }
   };
 
   handleSelect = (event) => {
@@ -22,6 +34,10 @@ class AdminLogin extends Component {
 
   handleInputGameCode = (event) => {
     this.setState({ gameCode: event.target.value });
+  };
+
+  handleInputPassword = (event) => {
+    this.setState({ password: event.target.value });
   };
 
   render() {
@@ -43,6 +59,12 @@ class AdminLogin extends Component {
               type="text"
               placeholder="game code"
               onChange={this.handleInputGameCode}
+            />
+            <input
+              className="login-textbox"
+              type="text"
+              placeholder="password"
+              onChange={this.handleInputPassword}
             />
             <select onChange={this.handleSelect}>
               <option value="">--Please choose an option--</option>

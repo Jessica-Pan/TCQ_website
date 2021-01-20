@@ -9,6 +9,7 @@ import { get, post } from "../../utilities.js";
 // PROPS:
 //   gameCode: String,
 //   questionNumber: number,
+//   teamName: String
 //   questions: [String],
 //   time: Number,
 //   points: [Number],
@@ -32,7 +33,11 @@ class QuestionPage extends Component {
   loggedIn = () => {
     this.setState({ authorized: true });
     setInterval(this.decreaseTimer, 1000);
-    // post the time here somehow
+    post("/api/start-time/", {
+      gameCode: this.props.gameCode,
+      questionNum: this.props.questionNumber,
+      teamName: this.props.teamName,
+    });
   };
 
   handleAnswerChange = (partNum, newAnswer) => {

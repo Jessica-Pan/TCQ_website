@@ -19,9 +19,9 @@ class StudentPages extends Component {
 
   onSubmit = (code, teamName) => {
     console.log(code);
-    get("/api/game-for-students", { gameCode: code }).then((results) => {
+    get("/api/game-info", { gameCode: code }).then((results) => {
       console.log("got the game");
-      this.setState({ game: results[0], teamName: teamName });
+      this.setState({ game: results, teamName: teamName });
     });
   };
 
@@ -46,6 +46,7 @@ class StudentPages extends Component {
       <QuestionPage
         gameCode={this.state.game.gameCode}
         questionNumber={1 + i}
+        teamName={this.state.teamName}
         parts={this.state.game.parts[i]}
         questions={this.state.game.questions[i]}
         time={this.state.game.times[i]}

@@ -41,13 +41,53 @@ router.post("/new-game/", (req, res) => {
   console.log("POSTED");
 });
 
-router.get("/game-for-students/", (req, res) => {
+router.get("/game-info/", (req, res) => {
   console.log(`QUERY: ${req.query.gameCode}`);
-  Game.find({ gameCode: req.query.gameCode }).then((results) => {
+  Game.findOne({ gameCode: req.query.gameCode }).then((results) => {
     console.log(results);
     res.send(results);
   });
 });
+
+// given the gameCode, questionNum, startTime, teamName
+router.post("/start-time/", (req, res) => {
+  const currDate = new Date().toLocaleString();
+  const newAnswer = new Answer({
+    gameCode: req.body.gameCode,
+    questionNumber: req.body.questionNum,
+    team: req.body.teamName,
+    content: [],
+    startTime: currDate,
+  });
+  console.log("here is the new answer: ");
+  console.log(newAnswer);
+  newAnswer.save();
+});
+
+// given the gameCode, questionNum, teamName, content
+router.post("/student-answers/", (req, res) => {
+  Answer.findOne({
+    gameCode: req.body.gameCode,
+    questionNumber: req.body.questionNum,
+    team: req.body.teamName,
+  }).then((answer) => {
+    answer.content = req.body.content;
+    answer.save();
+  });
+});
+
+// // given the gameCode and questionNum and partNum, get all the answers
+// router.get("/answers/", (req, res) => {});
+
+// given the gameCode
+router.get("/start-times/", (req, res) => {
+  Answer.find({ gameCode: req.query.gameCode }).then((results) => {
+    res.send(results);
+  });
+});
+
+// // given the gameCode, questionNum, grades
+// router.post("/grades/", (req, res) => {});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

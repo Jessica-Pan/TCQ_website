@@ -1,30 +1,34 @@
 import React, { Component } from "react";
 
 import AdminLogin from "./Admin-Login.js";
+import ProctorPage from "./ProctorPage.js";
 
 class AdminPages extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
     this.state = {
-      gameCode: "",
       role: "", //two roles: P for proctor and G for grader
     };
   }
 
-  setGameCode = (code, role) => {
-    this.setState({ gameCode: code, role: role });
+  setGame = (game, role) => {
+    this.setState({ game: game, role: role });
+    console.log(role);
   };
 
   render() {
-    if (this.state.gameCode == "") {
+    if (this.state.game === undefined) {
       return (
         <>
-          <AdminLogin setGameCode={this.setGameCode} />
+          <AdminLogin setGame={this.setGame} />
         </>
       );
     }
-    return <> ADMIN PAGES </>;
+    if (this.state.role === "p") {
+      return <ProctorPage game={this.state.game} />;
+    }
+    return <> GRADERS PAGES </>;
   }
 }
 
