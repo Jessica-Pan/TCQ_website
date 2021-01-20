@@ -12,9 +12,10 @@ class NewGame extends Component {
     // Initialize Default State
     this.state = {
       numQuestions: 1,
-      questions: [],
-      times: [],
-      points: [],
+      parts: [1],
+      questions: [""],
+      times: [0],
+      points: [0],
       submitted: false,
     };
   }
@@ -40,6 +41,7 @@ class NewGame extends Component {
     let gameCode = this.makePassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     post("/api/new-game/", {
       gameCode: gameCode,
+      parts: this.state.parts,
       questions: this.state.questions,
       times: this.state.times,
       points: this.state.points,
@@ -59,6 +61,7 @@ class NewGame extends Component {
       questions: new Array(numQuestions).fill(""),
       times: new Array(numQuestions).fill(0),
       points: new Array(numQuestions).fill(0),
+      parts: new Array(numQuestions).fill(1),
     });
   };
 
@@ -87,6 +90,14 @@ class NewGame extends Component {
     });
   };
 
+  changeNumParts = (questionNum, numPart) => {
+    let newParts = this.state.parts;
+    newParts[questionNum - 1] = numPart;
+    this.setState({
+      parts: newParts,
+    });
+  };
+
   render() {
     if (this.state.submitted) {
       return (
@@ -96,12 +107,15 @@ class NewGame extends Component {
           {this.state.questions.map((question, i) => (
             <div key={`question-overview-${i}`}>
               <h2> Question {i + 1}: </h2>
-              <p> {question} </p>
-              <p>
-                This question is worth {this.state.points[i]} points. Students get{" "}
-                {this.state.times[i]} seconds to answer this question. The password for this
-                question is {this.state.questionPasswords[i]}
-              </p>
+              <p> Students get {this.state.times[i]} seconds to answer this question </p>
+              <p> The password for this question is {this.state.questionPasswords[i]} </p>
+              {question.map((singleQuestion, j) => (
+                <div key={`question-${i}-part-${j}`}>
+                  <h4> Part {j + 1}: </h4>
+                  <p> Question: {singleQuestion} </p>
+                  <p> This is worth {this.state.points[i][j]} points. </p>
+                </div>
+              ))}
             </div>
           ))}
         </>

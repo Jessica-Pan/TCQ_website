@@ -14,7 +14,7 @@ class StudentLogin extends Component {
 
   handleSubmit = (event) => {
     console.log(`Team: ${this.state.inputedTeam}, Code: ${this.state.inputedCode}`);
-    this.props.setGameCode(this.state.inputedCode);
+    this.props.onSubmit(this.state.inputedCode, this.state.inputedTeam);
   };
 
   handleChangeName = (event) => {

@@ -30,6 +30,7 @@ router.post("/initsocket", (req, res) => {
 router.post("/new-game/", (req, res) => {
   const newGame = new Game({
     gameCode: req.body.gameCode,
+    parts: req.body.parts,
     questions: req.body.questions,
     times: req.body.times,
     points: req.body.points,

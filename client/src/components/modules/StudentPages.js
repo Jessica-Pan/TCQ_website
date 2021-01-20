@@ -15,19 +15,23 @@ class StudentPages extends Component {
     };
   }
 
-  setGameCode = (code) => {
+  onSubmit = (code, teamName) => {
     console.log(code);
     get("/api/game-for-students", { gameCode: code }).then((results) => {
       console.log("got the game");
-      this.setState({ game: results[0] });
+      this.setState({ game: results[0], teamName: teamName });
     });
+  };
+
+  setTeamName = (teamName) => {
+    this.setState({ teamName: teamName });
   };
 
   render() {
     if (this.state.game === "") {
       return (
         <>
-          <StudentLogin setGameCode={this.setGameCode} />
+          <StudentLogin onSubmit={this.onSubmit} />
         </>
       );
     }
@@ -35,6 +39,7 @@ class StudentPages extends Component {
     console.log(this.state.game);
     return (
       <>
+        Your name: {this.state.teamName}
         Game code: {this.state.game.gameCode} Questions: {this.state.game.questions}, you get{" "}
         {this.state.game.times} seconds, worth {this.state.game.points} points.
       </>
