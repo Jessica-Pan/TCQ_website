@@ -26,7 +26,7 @@ class ProctorPage extends Component {
     return (
       <>
         <h1> {this.props.game.gameCode} </h1>
-        {this.state.answerObjects.map((answerObj) => (
+        {this.state.answerObjects.map((answerObj, i) => (
           <div key={`answerObject-${i}`}>
             <h2> {answerObj.team} </h2>
             <p>

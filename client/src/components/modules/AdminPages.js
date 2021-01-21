@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import AdminLogin from "./Admin-Login.js";
+import GraderPage from "./GradersPage.js";
 import ProctorPage from "./ProctorPage.js";
 
 class AdminPages extends Component {
@@ -28,7 +29,7 @@ class AdminPages extends Component {
     if (this.state.role === "p") {
       return <ProctorPage game={this.state.game} />;
     }
-    return <> GRADERS PAGES </>;
+    return <GraderPage game={this.state.game} />;
   }
 }
 

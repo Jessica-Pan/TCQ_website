@@ -84,8 +84,15 @@ router.post("/student-answers/", (req, res) => {
   });
 });
 
-// // given the gameCode and questionNum and partNum, get all the answers
-// router.get("/answers/", (req, res) => {});
+// given the gameCode and questionNum, get all the answers
+router.get("/answers/", (req, res) => {
+  Answer.find({
+    gameCode: req.query.gameCode,
+    questionNumber: req.query.questionNum,
+  }).then((results) => {
+    res.send(results);
+  });
+});
 
 // given the gameCode
 router.get("/start-times/", (req, res) => {
