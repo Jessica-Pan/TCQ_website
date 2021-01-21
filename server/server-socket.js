@@ -25,6 +25,18 @@ const removeUser = (user, socket) => {
   delete socketToUserMap[socket.id];
 };
 
+//makes player join a socket room 
+const addPlayerToRoom = (user, gameCode, teamName) => {
+  const socket = getSocketFromUserID(user);
+  socket.join(`${teamName}${gameCode}`);
+}
+
+//updates textbox view for all players in a room
+const updateTextbox = (newAns, gameCode, teamName) =>{
+  io.to(`${teamName}${gameCode}`).emit("updateText", newAns);
+}
+
+
 module.exports = {
   init: (http) => {
     io = require("socket.io")(http);
@@ -40,6 +52,8 @@ module.exports = {
 
   addUser: addUser,
   removeUser: removeUser,
+  addPlayerToRoom: addPlayerToRoom,
+  updateTextbox: updateTextbox,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,

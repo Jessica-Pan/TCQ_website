@@ -2,8 +2,11 @@ import React, { Component } from "react";
 
 import StudentLogin from "./Student-Login.js";
 import QuestionPage from "./QuestionPage.js";
+import { socket } from "../../client-socket";
 
+import "../../utilities.css";
 import { get, post } from "../../utilities.js";
+import { navigate } from "@reach/router";
 
 class StudentPages extends Component {
   constructor(props) {
@@ -15,7 +18,15 @@ class StudentPages extends Component {
       studentName: "",
       onQuestion: 0,
       done: false,
+      currentAns: "",
     };
+
+    socket.on("updateText", (newAns) => {
+      this.setState({
+        currentAns: newAns,
+      })
+    })
+    
   }
 
   onSubmit = (code, teamName) => {

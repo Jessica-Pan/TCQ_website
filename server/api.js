@@ -26,6 +26,16 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
+//given gameCode, add player to room
+router.post("/new-player", (req,res) => {
+  socketManager.addPlayerToRoom(req.body.user, req.body.gameCode,req.body.teamName);
+})
+
+//given gameCode, updatedAns, teamName
+router.post("/textbox-update", (req,res) => {
+  socketManager.updateTextbox(req.body.newAns,req.body.gameCode,req.body.teamName);
+})
+
 // takes the game code as the parameter code
 router.post("/new-game/", (req, res) => {
   const newGame = new Game({
@@ -41,7 +51,8 @@ router.post("/new-game/", (req, res) => {
   console.log("POSTED");
 });
 
-router.get("/game-info/", (req, res) => {
+router.get("/game-info", (req, res) => {
+  console.log("in get");
   console.log(`QUERY: ${req.query.gameCode}`);
   Game.findOne({ gameCode: req.query.gameCode }).then((results) => {
     console.log(results);
