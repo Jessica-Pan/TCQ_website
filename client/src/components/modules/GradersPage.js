@@ -35,6 +35,7 @@ class GraderPage extends Component {
     const theAnswers = this.props.game.questions[this.state.questionNum - 1].map(
       (singleQuestion, partNum) => (
         <div key={`displayQuestion-${partNum}`}>
+          <h1> Part {partNum} </h1>
           <h3> (Worth {this.props.game.points[this.state.questionNum - 1][partNum]} points) </h3>
           <h5> {singleQuestion} </h5>
           {this.state.answerObjects.map((answerObj, i) => (

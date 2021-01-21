@@ -1,17 +1,10 @@
 ## What needs to be done
 
 - API stuff:
-  - posting a game
-  - getting a game
-  - Posting answers
-  - getting answers
   - Posting the scores
   - getting the scores (exporting to a csv file)
-- student pages
-- proctor page
-- grader pages
-  - let the grader choose which question part they want to look at
-- rn the new game doesn't actually make a new game
+- rn the grader's input doesn't actually go anywhere
+- the whole socket thing with the student answers
 
 ## Known issues
 
@@ -20,13 +13,11 @@
 ## Additional Features
 
 - uploading an image into the question
-- mulple parts per question
 - inputting a list of team names for a game
 
 ## What you need to change
 
-- Add a favicon to your website at the path client/dist/favicon.ico
-- Update website title in client/dist/index.html
+- Add a favicon to your website at the path client/dist/favicon.icon
 
 ## Socket stuff
 
