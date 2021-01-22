@@ -25,17 +25,20 @@ const removeUser = (user, socket) => {
   delete socketToUserMap[socket.id];
 };
 
-//makes player join a socket room 
-const addPlayerToRoom = (user, gameCode, teamName) => {
-  const socket = getSocketFromUserID(user);
+//makes player join a socket room
+const addPlayerToRoom = (userId, gameCode, teamName) => {
+  const socket = getSocketFromUserID(userId);
   socket.join(`${teamName}${gameCode}`);
-}
+};
 
 //updates textbox view for all players in a room
-const updateTextbox = (newAns, gameCode, teamName) =>{
-  io.to(`${teamName}${gameCode}`).emit("updateText", newAns);
-}
-
+const updateTextbox = (newAns, gameCode, teamName) => {
+  console.log("EMITTING THE FOLLOWING:");
+  console.log(teamName + " " + gameCode);
+  console.log(newAns);
+  io.emit(`updateText:${teamName}:${gameCode}`, newAns);
+  console.log("done emitting");
+};
 
 module.exports = {
   init: (http) => {

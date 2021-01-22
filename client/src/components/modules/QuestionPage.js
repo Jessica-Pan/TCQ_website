@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-import StudentLogin from "./Student-Login.js";
 import QuestionLogin from "./QuestionLogin.js";
 
 import "../pages/New-Game.css";
+import { socket } from "../../client-socket.js";
 import { get, post } from "../../utilities.js";
 
 // PROPS:
@@ -24,6 +24,13 @@ class QuestionPage extends Component {
       answers: new Array(this.props.questions.length).fill(""),
       time: this.props.time,
     };
+
+    socket.on(`updateText:${this.props.teamName}:${this.props.gameCode}`, (newAns) => {
+      this.setState({
+        answers: newAns,
+      });
+      console.log("the new socket answers: " + newAns);
+    });
   }
 
   decreaseTimer = () => {
@@ -51,7 +58,7 @@ class QuestionPage extends Component {
       content: this.state.answers,
     });
     this.props.nextQuestion();
-    this.setState({ time: -1, authorized: false, time: this.props.time });
+    this.setState({ authorized: false, time: this.props.time });
   };
 
   loggedIn = () => {
@@ -68,6 +75,12 @@ class QuestionPage extends Component {
     newAnswers[partNum] = newAnswer;
     this.setState({
       answers: newAnswers,
+    });
+    console.log("I'm posting to the socket the answer: " + newAnswers);
+    post("/api/textbox-update", {
+      gameCode: this.props.gameCode,
+      newAns: newAnswers,
+      teamName: this.props.teamName,
     });
   };
 
@@ -98,6 +111,7 @@ class QuestionPage extends Component {
               rows="10"
               cols="80"
               className="large-text-box"
+              value={this.state.answers[i]}
               onChange={(event) => this.handleAnswerChange(i, event.target.value)}
             />
           </div>

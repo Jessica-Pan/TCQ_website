@@ -27,14 +27,16 @@ router.post("/initsocket", (req, res) => {
 });
 
 //given gameCode, add player to room
-router.post("/new-player", (req,res) => {
-  socketManager.addPlayerToRoom(req.body.user, req.body.gameCode,req.body.teamName);
-})
+router.post("/new-player", (req, res) => {
+  socketManager.addPlayerToRoom(req.body.user, req.body.gameCode, req.body.teamName);
+});
 
 //given gameCode, updatedAns, teamName
-router.post("/textbox-update", (req,res) => {
-  socketManager.updateTextbox(req.body.newAns,req.body.gameCode,req.body.teamName);
-})
+router.post("/textbox-update", (req, res) => {
+  console.log("I'm in the post request for this answer");
+  console.log(req.body.newAns);
+  socketManager.updateTextbox(req.body.newAns, req.body.gameCode, req.body.teamName);
+});
 
 // takes the game code as the parameter code
 router.post("/new-game/", (req, res) => {
@@ -62,17 +64,23 @@ router.get("/game-info", (req, res) => {
 
 // given the gameCode, questionNum, startTime, teamName
 router.post("/start-time/", (req, res) => {
-  const currDate = new Date().toLocaleString();
-  const newAnswer = new Answer({
+  Answer.findOne({
     gameCode: req.body.gameCode,
     questionNumber: req.body.questionNum,
     team: req.body.teamName,
-    content: [],
-    startTime: currDate,
+  }).then((answer) => {
+    if (answer === null) {
+      const currDate = new Date().toLocaleString();
+      const newAnswer = new Answer({
+        gameCode: req.body.gameCode,
+        questionNumber: req.body.questionNum,
+        team: req.body.teamName,
+        content: [],
+        startTime: currDate,
+      });
+      newAnswer.save();
+    }
   });
-  console.log("here is the new answer: ");
-  console.log(newAnswer);
-  newAnswer.save();
 });
 
 // given the gameCode, questionNum, teamName, content

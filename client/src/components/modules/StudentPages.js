@@ -18,15 +18,7 @@ class StudentPages extends Component {
       studentName: "",
       onQuestion: 0,
       done: false,
-      currentAns: "",
     };
-
-    socket.on("updateText", (newAns) => {
-      this.setState({
-        currentAns: newAns,
-      })
-    })
-    
   }
 
   onSubmit = (code, teamName) => {
