@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "@reach/router";
 
 import "../pages/New-Game.css";
 import { get, post } from "../../utilities.js";
@@ -7,7 +8,7 @@ import { get, post } from "../../utilities.js";
 class GraderPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { questionNum: 1, answerObjects: [] };
+    this.state = { questionNum: 1, answerObjects: [], grades: [] };
   }
 
   componentDidMount = () => {
@@ -23,29 +24,56 @@ class GraderPage extends Component {
       (results) => {
         console.log("found some results");
         console.log(results);
-        this.setState({ questionNum: questionNum, answerObjects: results });
+        let grades = results.map((answer) => {
+          if (answer.grade.length === 0) {
+            return new Array(this.props.game.questions[questionNum].length).fill("Not graded");
+          }
+          return answer.grade;
+        });
+        console.log("Here are the grades I found:");
+        console.log(grades);
+        this.setState({ questionNum: questionNum, answerObjects: results, grades: grades });
       }
     );
   };
 
-  handleAnswerInput = () => {};
+  handleAnswerInput = (answer, grade, i, partNum) => {
+    console.log(
+      `read in a grade of ${grade} for part ${partNum} for the answer for team ${answer.team}`
+    );
+    // gameCode, questionNum, partNum, teamName, grade
+    post("/api/grades/", {
+      gameCode: answer.gameCode,
+      questionNum: answer.questionNumber,
+      teamName: answer.team,
+      partNum: partNum,
+      grade: grade,
+      numParts: this.props.game.questions[answer.questionNumber].length,
+    });
+    let newGrades = this.state.grades;
+    newGrades[i][partNum] = grade;
+    this.setState({ grades: newGrades });
+  };
 
   render() {
     console.log(this.props.game.questions[this.state.questionNum - 1]);
     const theAnswers = this.props.game.questions[this.state.questionNum - 1].map(
       (singleQuestion, partNum) => (
         <div key={`displayQuestion-${partNum}`}>
-          <h1> Part {partNum} </h1>
+          <h1> Part {partNum + 1} </h1>
           <h3> (Worth {this.props.game.points[this.state.questionNum - 1][partNum]} points) </h3>
           <h5> {singleQuestion} </h5>
           {this.state.answerObjects.map((answerObj, i) => (
             <div key={`answerObject-${partNum}-${i}`}>
               <h2> Answer by {answerObj.team} </h2>
               <p>{answerObj.content[partNum]}</p>
+              <p> Current grade: {this.state.grades[i][partNum]} </p>
               <input
                 className="small-text-box"
                 type="number"
-                onChange={(event) => this.handleAnswerInput(i, event.target.value)}
+                onChange={(event) =>
+                  this.handleAnswerInput(answerObj, event.target.value, i, partNum)
+                }
               />
             </div>
           ))}
@@ -60,13 +88,16 @@ class GraderPage extends Component {
         <input
           className="small-text-box"
           type="number"
+          value={this.state.questionNum}
           onChange={(event) => this.handleQuestionChange(event.target.value)}
         />
         <h1> Question {this.state.questionNum} </h1>
         {theAnswers}
         <div className="u-flex-justifyCenter top-margin">
           <span className="NewGame-button" onClick={this.handleSubmit}>
-            <span className="button-text">Set Game </span>
+            <Link className="button-text" to="/">
+              Done
+            </Link>
           </span>
         </div>
       </>
