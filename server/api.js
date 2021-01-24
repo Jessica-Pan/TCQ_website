@@ -146,6 +146,14 @@ router.post("/grades/", (req, res) => {
   });
 });
 
+router.get("/grades/", (req, res) => {
+  Answer.find({
+    gameCode: req.query.gameCode,
+  }).then((results) => {
+    res.send(results);
+  });
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
