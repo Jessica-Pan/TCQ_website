@@ -31,6 +31,12 @@ class QuestionPage extends Component {
       });
       console.log("the new socket answers: " + newAns);
     });
+
+    socket.on(`nextQ:${this.props.teamName}:${this.props.gameCode}`, () => {
+      if (!this.state.authorized) {
+        this.loggedIn();
+      }
+    });
   }
 
   decreaseTimer = () => {
@@ -63,12 +69,19 @@ class QuestionPage extends Component {
 
   loggedIn = () => {
     this.setState({ authorized: true, timer: setInterval(this.decreaseTimer, 1000) });
-    post("/api/start-time/", {
+    post("/api/move-to-next-q", {
       gameCode: this.props.gameCode,
-      questionNum: this.props.questionNumber,
       teamName: this.props.teamName,
-    });
-  };
+    })
+    
+    post("/api/start-time/", {
+        gameCode: this.props.gameCode,
+        questionNum: this.props.questionNumber,
+        teamName: this.props.teamName,
+      });
+    
+    
+  }; 
 
   handleAnswerChange = (partNum, newAnswer) => {
     let newAnswers = this.state.answers;
