@@ -45,6 +45,11 @@ const nextQ = (gameCode, teamName) => {
   console.log("next Q socket emitted")
 }
 
+const proctResetTime = (gameCode, teamName) => {
+  io.emit(`proctResetTime:${teamName}:${gameCode}`);
+  console.log("proct reset socket emitted");
+}
+
 module.exports = {
   init: (http) => {
     io = require("socket.io")(http);
@@ -63,6 +68,7 @@ module.exports = {
   addPlayerToRoom: addPlayerToRoom,
   updateTextbox: updateTextbox,
   nextQ: nextQ,
+  proctResetTime: proctResetTime,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,

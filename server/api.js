@@ -89,6 +89,11 @@ router.post("/move-to-next-q", (req,res)=> {
 
 });
 
+router.post("/proct-reset/",(req,res) => {
+  console.log("in proct reset post")
+  socketManager.proctResetTime(req.body.gameCode, req.body.teamName);
+});
+
 // given the gameCode, questionNum, teamName, content
 router.post("/student-answers/", (req, res) => {
   console.log("adding the actual answer to the mix");
@@ -125,6 +130,8 @@ router.get("/start-times/", (req, res) => {
     res.send(results);
   });
 });
+
+
 
 // // given the gameCode, questionNum, grades
 // router.post("/grades/", (req, res) => {});

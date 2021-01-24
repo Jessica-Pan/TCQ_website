@@ -23,6 +23,7 @@ class QuestionPage extends Component {
       authorized: false,
       answers: new Array(this.props.questions.length).fill(""),
       time: this.props.time,
+      reset: false,
     };
 
     socket.on(`updateText:${this.props.teamName}:${this.props.gameCode}`, (newAns) => {
@@ -37,6 +38,15 @@ class QuestionPage extends Component {
         this.loggedIn();
       }
     });
+
+    socket.on(`proctResetTime:${this.props.teamName}:${this.props.gameCode}`, () => {
+      console.log("proctor reset timer socket on! ");
+      this.setState({
+        time: this.props.time,
+        answers: new Array(this.props.questions.length).fill(""),
+        reset: true,
+      })
+    });
   }
 
   decreaseTimer = () => {
@@ -45,7 +55,14 @@ class QuestionPage extends Component {
     if (this.state.time === 0) {
       this.handleOutOfTime();
     }
-    this.setState({ time: this.state.time - 1 });
+    if (!this.state.reset || this.state.time === this.props.time){
+      this.setState({ 
+        time: this.state.time - 1,
+        reset: false,
+       });
+
+    }
+    
   };
 
   handleOutOfTime = () => {
