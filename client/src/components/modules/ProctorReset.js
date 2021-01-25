@@ -20,11 +20,8 @@ class ProctorReset extends Component {
     const team = this.state.inputedTeam;
     post("/api/proct-reset", {
         gameCode: this.props.gameCode,
-        teamName: team
+        teamName: team,
       });
-    this.setState({
-        inputedTeam: "",
-    })
 
   };
 

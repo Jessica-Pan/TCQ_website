@@ -89,7 +89,7 @@ router.post("/move-to-next-q", (req,res)=> {
 
 });
 
-router.post("/proct-reset/",(req,res) => {
+router.post("/proct-reset",(req,res) => {
   console.log("in proct reset post")
   socketManager.proctResetTime(req.body.gameCode, req.body.teamName);
 });

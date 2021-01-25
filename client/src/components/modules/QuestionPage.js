@@ -86,6 +86,7 @@ class QuestionPage extends Component {
 
   loggedIn = () => {
     this.setState({ authorized: true, timer: setInterval(this.decreaseTimer, 1000) });
+    // this.setState({ authorized: true});
     post("/api/move-to-next-q", {
       gameCode: this.props.gameCode,
       teamName: this.props.teamName,
