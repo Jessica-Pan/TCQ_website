@@ -94,6 +94,7 @@ router.post("/student-answers/", (req, res) => {
   }).then((answer) => {
     if (answer !== null) {
       answer.content = req.body.content;
+      answer.grade = "Not Graded";
       console.log("here is the updated answer with content");
       console.log(answer);
       answer.save();
@@ -131,14 +132,15 @@ router.post("/grades/", (req, res) => {
   }).then((answer) => {
     if (answer !== null) {
       let newGrades = answer.grade;
-      if (newGrades === []) {
-        newGrades = new Array(req.body.numParts).fill(0);
+      if (newGrades.length === 0) {
+        newGrades = new Array(req.body.numParts).fill("NG");
       }
       newGrades[req.body.partNum] = req.body.grade;
+
+      console.log(newGrades);
       answer.grade = newGrades;
-      console.log("here is the updated answer with grades");
-      console.log(answer);
       answer.save();
+      console.log("done submitting");
     } else {
       console.log("Could not find the answer with these attributes:");
       console.log(req.body.questionNum + " " + req.body.gameCode + " " + req.body.teamName);

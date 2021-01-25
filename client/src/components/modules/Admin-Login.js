@@ -18,8 +18,10 @@ class AdminLogin extends Component {
     if (this.state.selected === undefined) {
       alert("Please input a role first");
     } else {
+      console.log("getting the game");
       get("/api/game-info/", { gameCode: this.state.gameCode }).then((results) => {
         if (this.state.password === results.adminPassword) {
+          console.log("setting the game");
           this.props.setGame(results, this.state.selected[0]);
         } else {
           alert("That's not the right password");

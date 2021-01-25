@@ -26,7 +26,7 @@ class GraderPage extends Component {
         console.log(results);
         let grades = results.map((answer) => {
           if (answer.grade.length === 0) {
-            return new Array(this.props.game.questions[questionNum].length).fill("Not graded");
+            return new Array(this.props.game.questions[questionNum - 1].length).fill("Not graded");
           }
           return answer.grade;
         });
@@ -38,6 +38,10 @@ class GraderPage extends Component {
   };
 
   handleAnswerInput = (answer, grade, i, partNum) => {
+    if (grade < 0 && grade > this.props.game.points[i][partNum]) {
+      alert("That is not a valid score. The max is " + this.props.game.points[i][partNum]);
+      return;
+    }
     console.log(
       `read in a grade of ${grade} for part ${partNum} for the answer for team ${answer.team}`
     );
@@ -48,7 +52,7 @@ class GraderPage extends Component {
       teamName: answer.team,
       partNum: partNum,
       grade: grade,
-      numParts: this.props.game.questions[answer.questionNumber].length,
+      numParts: this.props.game.questions[answer.questionNumber - 1].length,
     });
     let newGrades = this.state.grades;
     newGrades[i][partNum] = grade;
@@ -83,7 +87,9 @@ class GraderPage extends Component {
     console.log(theAnswers);
     return (
       <>
-        <h1> {this.props.game.gameCode} </h1>
+        <h1>
+          {this.props.game.gameCode}: Question {this.state.questionNum}
+        </h1>
         Question Number:
         <input
           className="small-text-box"
@@ -91,7 +97,6 @@ class GraderPage extends Component {
           value={this.state.questionNum}
           onChange={(event) => this.handleQuestionChange(event.target.value)}
         />
-        <h1> Question {this.state.questionNum} </h1>
         {theAnswers}
         <div className="u-flex-justifyCenter top-margin">
           <span className="NewGame-button" onClick={this.handleSubmit}>
