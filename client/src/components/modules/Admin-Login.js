@@ -70,6 +70,7 @@ class AdminLogin extends Component {
               <option value="">--Please choose an option--</option>
               <option value="proctor">Proctor</option>
               <option value="grader">Grader</option>
+              <option value="info">Game Info</option>
             </select>
             <span className="button" onClick={this.handleSubmit}>
               <span className="button-text">Submit </span>

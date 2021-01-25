@@ -75,8 +75,9 @@ router.post("/start-time/", (req, res) => {
         gameCode: req.body.gameCode,
         questionNumber: req.body.questionNum,
         team: req.body.teamName,
-        content: [],
+        content: ["Not submitted"],
         startTime: currDate,
+        grade: ["Not graded"],
       });
       newAnswer.save();
     }
@@ -131,10 +132,38 @@ router.get("/start-times/", (req, res) => {
   });
 });
 
+// given the gameCode, questionNum, partNum, teamName, grade, numParts
+router.post("/grades/", (req, res) => {
+  console.log("submitting the grades");
+  Answer.findOne({
+    gameCode: req.body.gameCode,
+    questionNumber: req.body.questionNum,
+    team: req.body.teamName,
+  }).then((answer) => {
+    if (answer !== null) {
+      let newGrades = answer.grade;
+      if (newGrades === []) {
+        newGrades = new Array(req.body.numParts).fill(0);
+      }
+      newGrades[req.body.partNum] = req.body.grade;
+      answer.grade = newGrades;
+      console.log("here is the updated answer with grades");
+      console.log(answer);
+      answer.save();
+    } else {
+      console.log("Could not find the answer with these attributes:");
+      console.log(req.body.questionNum + " " + req.body.gameCode + " " + req.body.teamName);
+    }
+  });
+});
 
-
-// // given the gameCode, questionNum, grades
-// router.post("/grades/", (req, res) => {});
+router.get("/grades/", (req, res) => {
+  Answer.find({
+    gameCode: req.query.gameCode,
+  }).then((results) => {
+    res.send(results);
+  });
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

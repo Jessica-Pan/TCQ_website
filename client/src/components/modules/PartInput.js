@@ -28,7 +28,7 @@ class PartInput extends Component {
         Points:
         <input className="small-text-box" type="number" onChange={this.handleChangePoints} />
         <div className="standard-text">
-          Question text:
+          Question text: <br />
           <textarea
             rows="10"
             cols="80"

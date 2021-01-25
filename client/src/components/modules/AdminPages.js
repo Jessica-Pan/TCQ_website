@@ -3,13 +3,14 @@ import React, { Component } from "react";
 import AdminLogin from "./Admin-Login.js";
 import GraderPage from "./GradersPage.js";
 import ProctorPage from "./ProctorPage.js";
+import GameOverviewPage from "./GameOverviewPage.js";
 
 class AdminPages extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
     this.state = {
-      role: "", //two roles: P for proctor and G for grader
+      role: "", //three roles: p for proctor, i for info and g for grader
     };
   }
 
@@ -28,6 +29,8 @@ class AdminPages extends Component {
     }
     if (this.state.role === "p") {
       return <ProctorPage game={this.state.game} />;
+    } else if (this.state.role === "i") {
+      return <GameOverviewPage game={this.state.game} />;
     }
     return <GraderPage game={this.state.game} />;
   }
