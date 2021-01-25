@@ -23,6 +23,7 @@ class QuestionPage extends Component {
       authorized: false,
       answers: new Array(this.props.questions.length).fill(""),
       time: this.props.time,
+      reset: false,
     };
 
     socket.on(`updateText:${this.props.teamName}:${this.props.gameCode}`, (newAns) => {
@@ -30,6 +31,21 @@ class QuestionPage extends Component {
         answers: newAns,
       });
       console.log("the new socket answers: " + newAns);
+    });
+
+    socket.on(`nextQ:${this.props.teamName}:${this.props.gameCode}`, () => {
+      if (!this.state.authorized) {
+        this.loggedIn();
+      }
+    });
+
+    socket.on(`proctResetTime:${this.props.teamName}:${this.props.gameCode}`, () => {
+      console.log("proctor reset timer socket on! ");
+      this.setState({
+        time: this.props.time,
+        answers: new Array(this.props.questions.length).fill(""),
+        reset: true,
+      })
     });
   }
 
@@ -39,7 +55,14 @@ class QuestionPage extends Component {
     if (this.state.time === 0) {
       this.handleOutOfTime();
     }
-    this.setState({ time: this.state.time - 1 });
+    if (!this.state.reset || this.state.time === this.props.time){
+      this.setState({ 
+        time: this.state.time - 1,
+        reset: false,
+       });
+
+    }
+    
   };
 
   handleOutOfTime = () => {
@@ -63,12 +86,20 @@ class QuestionPage extends Component {
 
   loggedIn = () => {
     this.setState({ authorized: true, timer: setInterval(this.decreaseTimer, 1000) });
-    post("/api/start-time/", {
+    // this.setState({ authorized: true});
+    post("/api/move-to-next-q", {
       gameCode: this.props.gameCode,
-      questionNum: this.props.questionNumber,
       teamName: this.props.teamName,
-    });
-  };
+    })
+    
+    post("/api/start-time/", {
+        gameCode: this.props.gameCode,
+        questionNum: this.props.questionNumber,
+        teamName: this.props.teamName,
+      });
+    
+    
+  }; 
 
   handleAnswerChange = (partNum, newAnswer) => {
     let newAnswers = this.state.answers;

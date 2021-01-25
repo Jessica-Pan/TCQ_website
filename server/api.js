@@ -84,6 +84,17 @@ router.post("/start-time/", (req, res) => {
   });
 });
 
+router.post("/move-to-next-q", (req,res)=> {
+  console.log("moving everyone to next page");
+  socketManager.nextQ(req.body.gameCode,req.body.teamName);
+
+});
+
+router.post("/proct-reset",(req,res) => {
+  console.log("in proct reset post")
+  socketManager.proctResetTime(req.body.gameCode, req.body.teamName);
+});
+
 // given the gameCode, questionNum, teamName, content
 router.post("/student-answers/", (req, res) => {
   console.log("adding the actual answer to the mix");
@@ -102,7 +113,7 @@ router.post("/student-answers/", (req, res) => {
       console.log(req.body.questionNum + " " + req.body.gameCode + " " + req.body.teamName);
     }
   });
-});
+}); 
 
 // given the gameCode and questionNum, get all the answers
 router.get("/answers/", (req, res) => {

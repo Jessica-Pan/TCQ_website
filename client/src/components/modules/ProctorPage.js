@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ProctorReset from "./ProctorReset.js";
 
 import { get, post } from "../../utilities.js";
 
@@ -34,6 +35,9 @@ class ProctorPage extends Component {
             </p>
           </div>
         ))}
+
+        <ProctorReset gameCode = {this.props.game.gameCode}/>
+          
       </>
     );
   }
