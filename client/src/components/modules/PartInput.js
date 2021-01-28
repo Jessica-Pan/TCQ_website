@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../utilities.css";
 import "../pages/New-Game.css";
+import ImgUpload from "./ImgUpload";
 
 // @param id: Number
 // @param handleChangePoints
@@ -36,6 +37,7 @@ class PartInput extends Component {
             onChange={this.handleChangeQuestion}
           />
         </div>
+        <ImgUpload/>
       </>
     );
   }
