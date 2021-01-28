@@ -43,7 +43,7 @@ class GameOverviewPage extends Component {
           let startingArray = new Array(this.props.game.questions.length).fill("NA");
           let grade = answer.grade;
           console.log(answer.grade);
-          if (grade.length === 0) {
+          if (grade.length === 0 || grade[0] === -1) {
             console.log("here");
             grade = "NG";
           }
