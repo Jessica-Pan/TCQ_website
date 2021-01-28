@@ -42,13 +42,22 @@ const updateTextbox = (newAns, gameCode, teamName) => {
 
 const nextQ = (gameCode, teamName) => {
   io.emit(`nextQ:${teamName}:${gameCode}`);
-  console.log("next Q socket emitted")
-}
+  console.log("next Q socket emitted");
+};
 
 const proctResetTime = (gameCode, teamName) => {
   io.emit(`proctResetTime:${teamName}:${gameCode}`);
   console.log("proct reset socket emitted");
-}
+};
+
+const gradeChanged = (gameCode, questionNumber, teamName, newGrades) => {
+  io.emit(`grades${gameCode}`, {
+    questionNum: questionNumber,
+    teamName: teamName,
+    newGrades: newGrades,
+  });
+  console.log("Grade changed socket emitted with code " + `grades${gameCode}`);
+};
 
 module.exports = {
   init: (http) => {
@@ -69,6 +78,7 @@ module.exports = {
   updateTextbox: updateTextbox,
   nextQ: nextQ,
   proctResetTime: proctResetTime,
+  gradeChanged: gradeChanged,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,

@@ -3,12 +3,36 @@ import { Link } from "@reach/router";
 
 import "../pages/New-Game.css";
 import { get, post } from "../../utilities.js";
+import { socket } from "../../client-socket.js";
 
 // prop: game: the game object
 class GraderPage extends Component {
   constructor(props) {
     super(props);
     this.state = { questionNum: 1, answerObjects: [], grades: [] };
+    console.log("HERE" + `grades${this.props.game.gameCode}`);
+    socket.on(`grades${this.props.game.gameCode}`, (results) => {
+      console.log("HERE 1");
+      console.log(results);
+      console.log(results.questionNum);
+      if (results.questionNum === this.state.questionNum) {
+        console.log("HERE 2");
+        let objectsArray = [...this.state.answerObjects];
+        console.log(objectsArray);
+        let relevantAnswer = this.state.answerObjects.filter((answer) => {
+          return answer.team === results.teamName;
+        })[0];
+        let relevantIndex = this.state.answerObjects.indexOf(relevantAnswer);
+        relevantAnswer.grade = results.newGrades;
+        objectsArray[relevantIndex] = relevantAnswer;
+        console.log(relevantAnswer);
+        console.log(objectsArray);
+        let grades = [...this.state.grades];
+        grades[relevantIndex] = results.newGrades;
+
+        this.setState({ answerObjects: objectsArray, grades: grades });
+      }
+    });
   }
 
   componentDidMount = () => {

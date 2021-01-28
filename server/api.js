@@ -84,14 +84,13 @@ router.post("/start-time/", (req, res) => {
   });
 });
 
-router.post("/move-to-next-q", (req,res)=> {
+router.post("/move-to-next-q", (req, res) => {
   console.log("moving everyone to next page");
-  socketManager.nextQ(req.body.gameCode,req.body.teamName);
-
+  socketManager.nextQ(req.body.gameCode, req.body.teamName);
 });
 
-router.post("/proct-reset",(req,res) => {
-  console.log("in proct reset post")
+router.post("/proct-reset", (req, res) => {
+  console.log("in proct reset post");
   socketManager.proctResetTime(req.body.gameCode, req.body.teamName);
 });
 
@@ -114,7 +113,7 @@ router.post("/student-answers/", (req, res) => {
       console.log(req.body.questionNum + " " + req.body.gameCode + " " + req.body.teamName);
     }
   });
-}); 
+});
 
 // given the gameCode and questionNum, get all the answers
 router.get("/answers/", (req, res) => {
@@ -151,6 +150,12 @@ router.post("/grades/", (req, res) => {
       console.log(newGrades);
       answer.grade = newGrades;
       answer.save();
+      socketManager.gradeChanged(
+        req.body.gameCode,
+        req.body.questionNum,
+        req.body.teamName,
+        newGrades
+      );
       console.log("done submitting");
     } else {
       console.log("Could not find the answer with these attributes:");
