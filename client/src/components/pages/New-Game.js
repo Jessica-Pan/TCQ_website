@@ -22,7 +22,7 @@ class NewGame extends Component {
   }
 
   makePassword = (
-    characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789"
   ) => {
     let result = "";
     const charactersLength = characters.length;
@@ -39,7 +39,7 @@ class NewGame extends Component {
     for (let i = 0; i < this.state.numQuestions; i++) {
       questionPasswords = questionPasswords.concat([this.makePassword()]);
     }
-    let gameCode = this.makePassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    let gameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
     post("/api/new-game/", {
       gameCode: gameCode,
       parts: this.state.parts,
