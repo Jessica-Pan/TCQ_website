@@ -39,6 +39,7 @@ class AdminLogin extends Component {
   };
 
   handleInputPassword = (event) => {
+    // toUpperCase here
     this.setState({ password: event.target.value });
   };
 

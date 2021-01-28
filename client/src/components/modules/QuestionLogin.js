@@ -25,6 +25,7 @@ class QuestionLogin extends Component {
   };
 
   handleChangePassword = (event) => {
+    // to UpperCase()
     this.setState({
       inputedPassword: event.target.value,
     });

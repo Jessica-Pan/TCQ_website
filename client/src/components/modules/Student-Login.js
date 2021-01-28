@@ -20,7 +20,7 @@ class StudentLogin extends Component {
   };
 
   submitGameCode = (event) => {
-    this.props.submitGameCode(this.state.inputedCode);
+    this.props.submitGameCode(this.state.inputedCode.toUpperCase());
     this.setState({ gotGame: true });
   };
 
