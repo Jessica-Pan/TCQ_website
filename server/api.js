@@ -78,7 +78,7 @@ router.post("/start-time/", (req, res) => {
         team: req.body.teamName,
         content: ["Not submitted"],
         startTime: currDate,
-        grade: ["Not graded"],
+        grade: [-1],
       });
       newAnswer.save();
     }
