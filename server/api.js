@@ -48,6 +48,7 @@ router.post("/new-game/", (req, res) => {
     points: req.body.points,
     questionPasswords: req.body.questionPasswords,
     adminPassword: req.body.adminPassword,
+    teams: req.body.teams,
   });
   newGame.save();
   console.log("POSTED");

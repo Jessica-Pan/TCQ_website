@@ -8,6 +8,7 @@ const GameSchema = new mongoose.Schema({
   points: [[Number]],
   questionPasswords: [String],
   adminPassword: String,
+  teams: [String],
 });
 
 // compile model from schema

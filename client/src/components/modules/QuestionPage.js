@@ -45,7 +45,7 @@ class QuestionPage extends Component {
         time: this.props.time,
         answers: new Array(this.props.questions.length).fill(""),
         reset: true,
-      })
+      });
     });
   }
 
@@ -55,14 +55,12 @@ class QuestionPage extends Component {
     if (this.state.time === 0) {
       this.handleOutOfTime();
     }
-    if (!this.state.reset || this.state.time === this.props.time){
-      this.setState({ 
+    if (!this.state.reset || this.state.time === this.props.time) {
+      this.setState({
         time: this.state.time - 1,
         reset: false,
-       });
-
+      });
     }
-    
   };
 
   handleOutOfTime = () => {
@@ -90,16 +88,14 @@ class QuestionPage extends Component {
     post("/api/move-to-next-q", {
       gameCode: this.props.gameCode,
       teamName: this.props.teamName,
-    })
-    
+    });
+
     post("/api/start-time/", {
-        gameCode: this.props.gameCode,
-        questionNum: this.props.questionNumber,
-        teamName: this.props.teamName,
-      });
-    
-    
-  }; 
+      gameCode: this.props.gameCode,
+      questionNum: this.props.questionNumber,
+      teamName: this.props.teamName,
+    });
+  };
 
   handleAnswerChange = (partNum, newAnswer) => {
     let newAnswers = this.state.answers;
@@ -122,6 +118,7 @@ class QuestionPage extends Component {
           <QuestionLogin
             password={this.props.password}
             questionNum={this.props.questionNumber}
+            teamName={this.props.teamName}
             time={this.state.time}
             onSuccess={this.loggedIn}
           />

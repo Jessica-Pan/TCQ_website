@@ -15,22 +15,28 @@ class StudentPages extends Component {
     this.state = {
       game: "", // this is a game object
       teamName: "",
+      teams: [],
       studentName: "",
       onQuestion: 0,
       done: false,
     };
   }
 
-  onSubmit = (code, teamName) => {
+  submitGameCode = (code) => {
     console.log(code);
     get("/api/game-info", { gameCode: code }).then((results) => {
       console.log("got the game");
-      this.setState({ game: results, teamName: teamName });
+      this.setState({ game: results, teams: results.teams });
     });
+  };
+
+  submitTeamName = (teamName) => {
+    this.setState({ teamName: teamName });
   };
 
   setTeamName = (teamName) => {
     this.setState({ teamName: teamName });
+    console.log(teamName);
   };
 
   nextQuestion = () => {
@@ -42,10 +48,14 @@ class StudentPages extends Component {
   };
 
   render() {
-    if (this.state.game === "") {
+    if (this.state.game === "" || this.state.teamName === "") {
       return (
         <>
-          <StudentLogin onSubmit={this.onSubmit} />
+          <StudentLogin
+            submitGameCode={this.submitGameCode}
+            submitTeamName={this.submitTeamName}
+            teams={this.state.teams}
+          />
         </>
       );
     }

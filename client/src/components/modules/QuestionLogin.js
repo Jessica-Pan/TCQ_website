@@ -34,6 +34,7 @@ class QuestionLogin extends Component {
     return (
       <>
         <h1 className="title"> Question {this.props.questionNum} </h1>
+        <h3 className="standard-text u-textCenter"> Team: {this.props.teamName} </h3>
         <h3 className="standard-text u-textCenter"> Time: {this.props.time} seconds </h3>
         <div className="button-holder login-div">
           <div className="login-div">

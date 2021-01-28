@@ -54,7 +54,7 @@ class QuestionInput extends Component {
 
   render() {
     const numPartsArray = Array.from({ length: this.state.numParts }, (x, i) => i);
-    console.log(numPartsArray);
+    // console.log(numPartsArray);
     let PartInputs = numPartsArray.map((iterator, i) => (
       <PartInput
         key={`part-input-${i}`}

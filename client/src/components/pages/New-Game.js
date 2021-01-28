@@ -17,6 +17,7 @@ class NewGame extends Component {
       times: [0],
       points: [0],
       submitted: false,
+      team: [],
     };
   }
 
@@ -47,6 +48,7 @@ class NewGame extends Component {
       points: this.state.points,
       questionPasswords: questionPasswords,
       adminPassword: adminPassword,
+      teams: this.state.teams,
     });
     this.setState({ adminPassword, questionPasswords, gameCode, submitted: true });
   };
@@ -98,12 +100,21 @@ class NewGame extends Component {
     });
   };
 
+  handleChangeTeams = (event) => {
+    console.log(event.target.value);
+    let teams = event.target.value.split("\n");
+    console.log(teams);
+    this.setState({ teams: teams });
+  };
+
   render() {
     if (this.state.submitted) {
       return (
         <>
-          You have made a new game! The code is {this.state.gameCode}. The admin password is
-          {this.state.adminPassword}. Here are your questions and their passwords:
+          You have made a new game! The code is {this.state.gameCode}. The admin password is{" "}
+          {this.state.adminPassword}.
+          <div> Here are all of the teams in this game: {this.state.teams.join(", ")} </div> Here
+          are your questions and their passwords:
           {this.state.questions.map((question, i) => (
             <div key={`question-overview-${i}`}>
               <h2> Question {i + 1}: </h2>
@@ -139,6 +150,10 @@ class NewGame extends Component {
           <span className="New-Game-numQ-span">
             <input className="small-text-box" type="number" onChange={this.handleChangeNumQ} />
           </span>
+        </div>
+        <div>
+          <span className="standard-text">Teams in this game (one per line): </span>
+          <textarea className="large-text-box" onChange={this.handleChangeTeams} />
         </div>
         {questionInputs}
         <div className="u-flex-justifyCenter top-margin">
