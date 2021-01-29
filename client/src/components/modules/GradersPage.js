@@ -108,6 +108,7 @@ class GraderPage extends Component {
               <input
                 className="small-text-box"
                 type="number"
+                value={this.state.grades[i][partNum]}
                 onChange={(event) =>
                   this.handleAnswerInput(answerObj, event.target.value, i, partNum)
                 }

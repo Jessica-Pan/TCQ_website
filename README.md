@@ -8,7 +8,6 @@
 ## Known issues
 
 - New-Game: If you change the number of questions, it should erase what's written in the boxes already
-- grades in text boxes carry over when you change question? 
 
 ## EXISTING TEST GAMES
 
