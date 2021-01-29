@@ -17,7 +17,7 @@ class NewGame extends Component {
       times: [0],
       points: [0],
       submitted: false,
-      team: [],
+      teams: [],
     };
   }
 
@@ -32,22 +32,26 @@ class NewGame extends Component {
 
   handleSubmit = (event) => {
     console.log("SUBMIT");
+    if (this.state.teams.length === 0) {
+      alert("Input the teams that will be in this game");
+      return;
+    }
     let adminPassword = this.makePassword();
     let questionPasswords = [];
     for (let i = 0; i < this.state.numQuestions; i++) {
       questionPasswords = questionPasswords.concat([this.makePassword()]);
     }
     let gameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
-    post("/api/new-game/", {
-      gameCode: gameCode,
-      parts: this.state.parts,
-      questions: this.state.questions,
-      times: this.state.times,
-      points: this.state.points,
-      questionPasswords: questionPasswords,
-      adminPassword: adminPassword,
-      teams: this.state.teams,
-    });
+    // post("/api/new-game/", {
+    //   gameCode: gameCode,
+    //   parts: this.state.parts,
+    //   questions: this.state.questions,
+    //   times: this.state.times,
+    //   points: this.state.points,
+    //   questionPasswords: questionPasswords,
+    //   adminPassword: adminPassword,
+    //   teams: this.state.teams,
+    // });
     this.setState({ adminPassword, questionPasswords, gameCode, submitted: true });
   };
 
@@ -56,13 +60,24 @@ class NewGame extends Component {
     if (isNaN(numQuestions)) {
       numQuestions = 1;
     }
-    this.setState({
-      numQuestions: numQuestions,
-      questions: new Array(numQuestions).fill(""),
-      times: new Array(numQuestions).fill(0),
-      points: new Array(numQuestions).fill(0),
-      parts: new Array(numQuestions).fill(1),
-    });
+    let numToAdd = numQuestions - this.state.questions.length;
+    if (numToAdd > 0) {
+      this.setState({
+        numQuestions: numQuestions,
+        questions: this.state.questions.concat(new Array(numToAdd).fill("")),
+        times: this.state.times.concat(new Array(numToAdd).fill(0)),
+        points: this.state.points.concat(new Array(numToAdd).fill(0)),
+        parts: this.state.parts.concat(new Array(numToAdd).fill(1)),
+      });
+    } else if (numToAdd < 0) {
+      this.setState({
+        numQuestions: numQuestions,
+        questions: this.state.questions.slice(0, numQuestions),
+        times: this.state.times.slice(0, numQuestions),
+        points: this.state.points.slice(0, numQuestions),
+        parts: this.state.parts.slice(0, numQuestions),
+      });
+    }
   };
 
   changeQuestion = (questionNum, newQuestion) => {

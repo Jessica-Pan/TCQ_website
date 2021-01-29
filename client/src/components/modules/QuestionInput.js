@@ -23,11 +23,20 @@ class QuestionInput extends Component {
     if (isNaN(numParts)) {
       numParts = 1;
     }
-    this.setState({
-      numParts: numParts,
-      questions: new Array(numParts).fill(""),
-      points: new Array(numParts).fill(0),
-    });
+    let numToAdd = numParts - this.state.questions.length;
+    if (numToAdd > 0) {
+      this.setState({
+        numParts: numParts,
+        questions: this.state.questions.concat(new Array(numToAdd).fill("")),
+        points: this.state.points.concat(new Array(numParts).fill(0)),
+      });
+    } else if (numToAdd < 0) {
+      this.setState({
+        numParts: numParts,
+        questions: this.state.questions.slice(0, numParts),
+        points: this.state.points.slice(0, numParts),
+      });
+    }
   };
 
   handleChangeQuestion = (partNum, newQuestion) => {
