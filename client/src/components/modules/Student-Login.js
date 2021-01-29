@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "../../utilities.css";
 import "../pages/LoginPages.css";
 
+import { get, post } from "../../utilities.js";
+
 // props: submitGameCode, submitTeamName, teams
 class StudentLogin extends Component {
   constructor(props) {
@@ -15,7 +17,18 @@ class StudentLogin extends Component {
   }
 
   submitTeamName = (event) => {
-    this.props.submitTeamName(this.state.inputedTeam);
+    get("/api/answer_exists", {
+      gameCode: this.state.inputedCode.toUpperCase(),
+      teamName: this.state.inputedTeam,
+    }).then((results) => {
+      console.log("Does the answer exist?");
+      console.log(results);
+      if (results.exists) {
+        alert("That team has already submitted in this question.");
+      } else {
+        this.props.submitTeamName(this.state.inputedTeam);
+      }
+    });
     // this.setState({ gotGame: true });
   };
 
@@ -29,9 +42,11 @@ class StudentLogin extends Component {
   };
 
   handleChangeCode = (event) => {
-    this.setState({
-      inputedCode: event.target.value,
-    });
+    if (!this.state.gotGame) {
+      this.setState({
+        inputedCode: event.target.value,
+      });
+    }
   };
 
   render() {

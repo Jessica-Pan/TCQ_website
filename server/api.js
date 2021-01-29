@@ -116,6 +116,15 @@ router.post("/student-answers/", (req, res) => {
   });
 });
 
+//given gameCode and teamName
+router.get("/answer_exists", (req, res) => {
+  console.log("seeing if the answer exists");
+  Answer.find({ gameCode: req.query.gameCode, team: req.query.teamName }).then((results) => {
+    console.log(results);
+    res.send({ exists: results.length !== 0 });
+  });
+});
+
 // given the gameCode and questionNum, get all the answers
 router.get("/answers/", (req, res) => {
   Answer.find({
