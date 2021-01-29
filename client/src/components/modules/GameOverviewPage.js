@@ -7,7 +7,7 @@ class GameOverviewPage extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    this.state = { gradeTable: <> Not gotten yet </> };
+    this.state = { gradeTable: ["not gotten yet."] };
   }
 
   //   ANSWER:
@@ -98,8 +98,7 @@ class GameOverviewPage extends Component {
         }
       }
       let answerTableString = answerTable.join("\n");
-      console.log(answerTableString);
-      this.setState({ gradeTable: questionHeaders + "\n" + answerTableString });
+      this.setState({ gradeTable: [questionHeaders].concat(answerTable) });
     });
   };
 
@@ -121,10 +120,15 @@ class GameOverviewPage extends Component {
   };
 
   handleDownload = () => {
-    this.download(this.state.gradeTable, `${this.props.game.gameCode}-grades.csv`, "csv");
+    this.download(
+      this.state.gradeTable.join("\n"),
+      `${this.props.game.gameCode}-grades.csv`,
+      "csv"
+    );
   };
 
   render() {
+    console.log(this.state.gradeTable);
     return (
       <>
         Here is the information for the game with code {this.props.game.gameCode}. The admin
@@ -146,7 +150,11 @@ class GameOverviewPage extends Component {
           </div>
         ))}
         <button onClick={this.getGrades}> Show grades </button>
-        {this.state.gradeTable}
+        {this.state.gradeTable.map((line) => (
+          <p key={`display-${line}`}>
+            {line} <br />
+          </p>
+        ))}
         <button onClick={this.handleDownload}> Download </button>
       </>
     );
