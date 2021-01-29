@@ -38,6 +38,11 @@ class GameOverviewPage extends Component {
           if (grade === []) {
             grade = "NG";
           }
+          for (let j = 0; j < grade.length; j++) {
+            if (grade[j] === -1) {
+              grade[j] = "NG";
+            }
+          }
           answerDict[answer.team][answer.questionNumber - 1] = grade;
         } else {
           let startingArray = new Array(this.props.game.questions.length).fill("NA");

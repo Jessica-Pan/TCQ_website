@@ -79,7 +79,11 @@ class QuestionPage extends Component {
       content: this.state.answers,
     });
     this.props.nextQuestion();
-    this.setState({ authorized: false, time: this.props.time });
+    this.setState({
+      authorized: false,
+      time: this.props.time,
+      answers: new Array(this.props.questions[this.props.questionNumber].length).fill(""),
+    });
   };
 
   loggedIn = () => {

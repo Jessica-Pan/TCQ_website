@@ -48,10 +48,12 @@ class StudentLogin extends Component {
     console.log(this.props.teams);
     if (this.state.gotGame && this.props.teams.length !== 0) {
       teamInput = (
-        <select onChange={this.handleSelect}>
+        <select className="dropDown" onChange={this.handleSelect}>
           <option value="">--Please choose a team--</option>
           {this.props.teams.map((teamName) => (
-            <option value={teamName}>{teamName}</option>
+            <option key={`option-${teamName}`} value={teamName}>
+              {teamName}
+            </option>
           ))}
         </select>
       );

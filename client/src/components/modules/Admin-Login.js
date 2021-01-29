@@ -69,7 +69,7 @@ class AdminLogin extends Component {
               placeholder="password"
               onChange={this.handleInputPassword}
             />
-            <select onChange={this.handleSelect}>
+            <select className="dropDown" onChange={this.handleSelect}>
               <option value="">--Please choose an option--</option>
               <option value="proctor">Proctor</option>
               <option value="grader">Grader</option>

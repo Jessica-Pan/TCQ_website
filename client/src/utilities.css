@@ -38,6 +38,13 @@ body {
   font-weight: 300;
 }
 
+.dropDown {
+  border-radius: 20px;
+  width: 250px;
+  height: 70px;
+  margin-bottom: 20px;
+}
+
 form {
   flex-grow: 1;
 }

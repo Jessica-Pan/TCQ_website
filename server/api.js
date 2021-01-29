@@ -105,7 +105,7 @@ router.post("/student-answers/", (req, res) => {
   }).then((answer) => {
     if (answer !== null) {
       answer.content = req.body.content;
-      answer.grade = "Not Graded";
+      answer.grade = [-1];
       console.log("here is the updated answer with content");
       console.log(answer);
       answer.save();
