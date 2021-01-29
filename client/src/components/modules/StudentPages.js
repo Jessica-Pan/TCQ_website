@@ -43,8 +43,9 @@ class StudentPages extends Component {
     if (this.state.onQuestion + 1 === this.state.game.questions.length) {
       this.setState({ done: true });
       console.log("SETTING DONE TO TRUE");
+    } else {
+      this.setState({ onQuestion: this.state.onQuestion + 1 });
     }
-    this.setState({ onQuestion: this.state.onQuestion + 1 });
   };
 
   render() {

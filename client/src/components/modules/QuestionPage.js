@@ -55,7 +55,7 @@ class QuestionPage extends Component {
     if (this.state.time === 0) {
       this.handleOutOfTime();
     }
-    if (!this.state.reset || this.state.time === this.props.time) {
+    if (this.state.authorized) {
       this.setState({
         time: this.state.time - 1,
         reset: false,
@@ -78,12 +78,12 @@ class QuestionPage extends Component {
       teamName: this.props.teamName,
       content: this.state.answers,
     });
-    this.props.nextQuestion();
     this.setState({
       authorized: false,
       time: this.props.time,
-      answers: new Array(this.props.questions[this.props.questionNumber].length).fill(""),
+      answers: new Array(this.props.questions.length).fill(""),
     });
+    this.props.nextQuestion();
   };
 
   loggedIn = () => {

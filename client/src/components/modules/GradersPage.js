@@ -44,6 +44,7 @@ class GraderPage extends Component {
       alert("That's not a valid question number.");
       return;
     }
+    this.setState({ grades: [] });
     get("/api/answers/", { gameCode: this.props.game.gameCode, questionNum: questionNum }).then(
       (results) => {
         console.log("found some results");
