@@ -21,9 +21,7 @@ class NewGame extends Component {
     };
   }
 
-  makePassword = (
-    characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789"
-  ) => {
+  makePassword = (characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789") => {
     let result = "";
     const charactersLength = characters.length;
     for (var i = 0; i < 6; i++) {
@@ -161,6 +159,22 @@ class NewGame extends Component {
             <span className="button-text">Set Game </span>
           </span>
         </div>
+        {/* <div>
+          <h1> Upload an image. </h1>
+          <form action="/uploaded-image" method="post" enctype="multipart/form-data">
+            <div>
+              <label for="questionNum">Image Title</label>
+              <input type="Number" id="name" placeholder="1" value="" name="questionNum" required />
+            </div>
+            <div>
+              <label for="image">Upload Image</label>
+              <input type="file" id="image" name="image" value="" required />
+            </div>
+            <div>
+              <button type="submit">Submit</button>
+            </div>
+          </form>
+        </div> */}
       </>
     );
   }

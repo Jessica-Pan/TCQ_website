@@ -80,7 +80,7 @@ class QuestionPage extends Component {
     });
     this.setState({
       authorized: false,
-      time: this.props.time,
+      time: this.props.nextQuestionTime,
       answers: new Array(this.props.questions.length).fill(""),
     });
     this.props.nextQuestion();

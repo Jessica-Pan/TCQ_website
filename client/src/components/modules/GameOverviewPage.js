@@ -64,18 +64,31 @@ class GameOverviewPage extends Component {
       for (var key in answerDict) {
         // check if the property/key is defined in the object itself, not in parent
         if (answerDict.hasOwnProperty(key)) {
-          let teamArray = [key].concat(answerDict[key]);
+          let teamArray = [key];
           //   console.log(key);
           //   console.log(answerDict[key]);
           let total = 0;
           console.log(teamArray);
           for (let i = 0; i < answerDict[key].length; i++) {
             // console.log(answerDict[key][i]);
-            const toAdd = parseInt(answerDict[key][i]);
-            // console.log(toAdd);
-            if (!isNaN(toAdd)) {
-              //   console.log("not a nan");
-              total += toAdd;
+            if (Array.isArray(answerDict[key][i])) {
+              for (let j = 0; j < answerDict[key][i].length; j++) {
+                const toAdd = parseInt(answerDict[key][i][j]);
+                teamArray.push(toAdd);
+                // console.log(toAdd);
+                if (!isNaN(toAdd)) {
+                  //   console.log("not a nan");
+                  total += toAdd;
+                }
+              }
+            } else {
+              const toAdd = parseInt(answerDict[key][i]);
+              teamArray.push(toAdd);
+              // console.log(toAdd);
+              if (!isNaN(toAdd)) {
+                //   console.log("not a nan");
+                total += toAdd;
+              }
             }
             // console.log(total);
           }

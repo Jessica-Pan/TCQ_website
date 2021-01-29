@@ -71,6 +71,7 @@ class StudentPages extends Component {
         teamName={this.state.teamName}
         parts={this.state.game.parts[i]}
         questions={this.state.game.questions[i]}
+        nextQuestionTime={this.state.game.times[i + 1]}
         time={this.state.game.times[i]}
         points={this.state.game.points[i]}
         password={this.state.game.questionPasswords[i]}
