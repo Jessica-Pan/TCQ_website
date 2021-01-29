@@ -25,6 +25,9 @@ const session = require("express-session"); // library that stores info about ea
 const mongoose = require("mongoose"); // library to connect to MongoDB
 const path = require("path"); // provide utilities for working with file and directory paths
 
+const bodyParser = require("body-parser");
+const fs = require("fs");
+
 const api = require("./api");
 
 // socket stuff
@@ -69,6 +72,39 @@ app.use("/api", api);
 // load the compiled react files, which will serve /index.html and /bundle.js
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
 app.use(express.static(reactPath));
+
+// set up EJS
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.set("view engine", "ejs");
+
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+
+const upload = multer({ storage: storage });
+
+const Image = require("./models/image");
+
+// getting images
+app.get("/uploaded-image", (req, res) => {
+  imgModel.find({}, (err, items) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("An error occurred", err);
+    } else {
+      res.render("imagesPage", { items: items });
+    }
+  });
+});
 
 // for all other routes, render index.html and let react router handle it
 app.get("*", (req, res) => {
