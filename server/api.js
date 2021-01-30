@@ -108,6 +108,7 @@ router.post("/student-answers/", (req, res) => {
       answer.grade = [-1];
       console.log("here is the updated answer with content");
       console.log(answer);
+      answer.markModified("content");
       answer.save();
     } else {
       console.log("Could not find the answer with these attributes:");
@@ -160,12 +161,12 @@ router.post("/grades/", (req, res) => {
       console.log(newGrades);
       answer.grade = newGrades;
       answer.save();
-      // socketManager.gradeChanged(
-      //   req.body.gameCode,
-      //   req.body.questionNum,
-      //   req.body.teamName,
-      //   newGrades
-      // );
+      socketManager.gradeChanged(
+        req.body.gameCode,
+        req.body.questionNum,
+        req.body.teamName,
+        newGrades
+      );
       console.log("done submitting");
     } else {
       console.log("Could not find the answer with these attributes:");

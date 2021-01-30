@@ -3,7 +3,7 @@
 - Image uploading
 - fixing the socket issue
 - documentation
-- make a socket for the proctor page? 
+- make a socket for the proctor page?
 
 ## Known issues
 
@@ -11,7 +11,7 @@
 
 ## EXISTING TEST GAMES
 
-You have made a new game! The code is HIOIHH. The admin password I1eQYX. Here are your questions and their passwords:
+You have made a new game! The code is  HIOIHH. The admin password I1eQYX. Here are your questions and their passwords:
 Question 1:
 This is the text for question 1.
 This question is worth 1 points. Students get 11 seconds to answer this question. The password for this question is 49wvwo
@@ -20,7 +20,7 @@ Question 2:
 This is the text for question 2.
 This question is worth 2 points. Students get 22 seconds to answer this question. The password for this question is zRg75I
 
-You have made a new game! The code is XFPAPG. The admin password iswndPdw. Here are your questions and their passwords:
+You have made a new game! The code is XFPAPG. The admin password is wndPdw. Here are your questions and their passwords:
 Question 1:
 Students get 12 seconds to answer this question
 The password for this question is cBpFBj

@@ -108,11 +108,11 @@ class QuestionPage extends Component {
       answers: newAnswers,
     });
     console.log("I'm posting to the socket the answer: " + newAnswers);
-    // post("/api/textbox-update", {
-    //   gameCode: this.props.gameCode,
-    //   newAns: newAnswers,
-    //   teamName: this.props.teamName,
-    // });
+    post("/api/textbox-update", {
+      gameCode: this.props.gameCode,
+      newAns: newAnswers,
+      teamName: this.props.teamName,
+    });
   };
 
   render() {

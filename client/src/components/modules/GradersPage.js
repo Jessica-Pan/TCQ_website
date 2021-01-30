@@ -84,10 +84,10 @@ class GraderPage extends Component {
   };
 
   render() {
-    console.log(this.props.game.questions[this.state.questionNum - 1]);
-    console.log(this.state.answerObjects);
-    console.log("REDNERINGINGIGNIGNI");
-    console.log(this.state.grades);
+    // console.log(this.props.game.questions[this.state.questionNum - 1]);
+    // console.log(this.state.answerObjects);
+    // console.log("REDNERINGINGIGNIGNI");
+    // console.log(this.state.grades);
     const theAnswers = this.props.game.questions[this.state.questionNum - 1].map(
       (singleQuestion, partNum) => (
         <div key={`displayQuestion-${partNum}`}>
