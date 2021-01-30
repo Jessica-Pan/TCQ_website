@@ -106,6 +106,24 @@ app.get("/uploaded-image", (req, res) => {
   });
 });
 
+app.post("/upload-image", upload.single("image"), (req, res, next) => {
+  var obj = {
+    questionNumber: req.body.questionNum,
+    gameCode: req.body.gameCode,
+    img: {
+      data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+      contentType: "image/png",
+    },
+  };
+  imgModel.create(obj, (err, item) => {
+    if (err) {
+      console.log(err);
+    } else {
+      item.save();
+    }
+  });
+});
+
 // for all other routes, render index.html and let react router handle it
 app.get("*", (req, res) => {
   res.sendFile(path.join(reactPath, "index.html"));

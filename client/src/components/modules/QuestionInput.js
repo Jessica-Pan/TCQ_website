@@ -77,19 +77,29 @@ class QuestionInput extends Component {
       <>
         <div>
           <span className="standard-text">
-            <h2 className="header-text"> Question {this.props.id}: </h2>
-            <div className="New-Game-numQ">
-              <span className="standard-text">Number of Parts:</span>
-              <span className="New-Game-numQ-span">
-                <input
-                  className="small-text-box"
-                  type="number"
-                  onChange={this.handleChangeNumParts}
-                />
+            <span className="u-flex-space-between">
+              <h2 className="header-text"> Question {this.props.id}: </h2>
+              <span className="New-Game-numQ">
+                <span className="standard-text">Number of Parts:</span>
+                <span className="New-Game-numQ-span">
+                  <input
+                    className="small-text-box"
+                    type="number"
+                    onChange={this.handleChangeNumParts}
+                  />
+                </span>
               </span>
-            </div>
+            </span>
             Time (in seconds):
             <input className="small-text-box" type="number" onChange={this.handleChangeTime} />
+            {/* IMAGE UPLOAD <span className="u-flex u-flex-alignCenter">
+              <h5 className="u-rightMargin"> Upload an Image </h5>
+              <input
+                type="file"
+                name="image"
+                onChange={(event) => this.props.enteredImage(event.target.value, this.props.id)}
+              />{" "}
+            </span> */}
             {PartInputs}
           </span>
         </div>

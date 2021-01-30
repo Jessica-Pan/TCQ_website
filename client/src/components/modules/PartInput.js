@@ -24,7 +24,7 @@ class PartInput extends Component {
   render() {
     return (
       <>
-        <h4> Part {this.props.id} </h4>
+        <h3> Part {this.props.id} </h3>
         Points:
         <input className="small-text-box" type="number" onChange={this.handleChangePoints} />
         <div className="standard-text">

@@ -18,6 +18,7 @@ class NewGame extends Component {
       points: [0],
       submitted: false,
       teams: [],
+      images: [],
     };
   }
 
@@ -42,16 +43,26 @@ class NewGame extends Component {
       questionPasswords = questionPasswords.concat([this.makePassword()]);
     }
     let gameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
-    // post("/api/new-game/", {
-    //   gameCode: gameCode,
-    //   parts: this.state.parts,
-    //   questions: this.state.questions,
-    //   times: this.state.times,
-    //   points: this.state.points,
-    //   questionPasswords: questionPasswords,
-    //   adminPassword: adminPassword,
-    //   teams: this.state.teams,
-    // });
+    post("/api/new-game/", {
+      gameCode: gameCode,
+      parts: this.state.parts,
+      questions: this.state.questions,
+      times: this.state.times,
+      points: this.state.points,
+      questionPasswords: questionPasswords,
+      adminPassword: adminPassword,
+      teams: this.state.teams,
+    });
+    // IMAGE UPLOAD
+    // for (let i = 0; i < this.state.images.length; i++) {
+    //   const relevant = this.state.images[i];
+    //   console.log(relevant);
+    //   post("/upload-image", {
+    //     image: relevant[0],
+    //     questionNum: relevant[1],
+    //     gameCode: gameCode,
+    //   });
+    // }
     this.setState({ adminPassword, questionPasswords, gameCode, submitted: true });
   };
 
@@ -120,6 +131,12 @@ class NewGame extends Component {
     this.setState({ teams: teams });
   };
 
+  enteredImage = (image, questionNum) => {
+    let images = this.state.images;
+    images.push([image, questionNum]);
+    this.setState({ images: images });
+  };
+
   render() {
     if (this.state.submitted) {
       return (
@@ -153,6 +170,7 @@ class NewGame extends Component {
         changeTime={this.changeTime}
         changeQuestion={this.changeQuestion}
         changePoints={this.changePoints}
+        enteredImage={this.enteredImage}
       />
     ));
     return (
@@ -169,27 +187,27 @@ class NewGame extends Component {
           <textarea className="large-text-box" onChange={this.handleChangeTeams} />
         </div>
         {questionInputs}
-        <div className="u-flex-justifyCenter top-margin">
-          <span className="NewGame-button" onClick={this.handleSubmit}>
-            <span className="button-text">Set Game </span>
-          </span>
-        </div>
         {/* <div>
           <h1> Upload an image. </h1>
-          <form action="/uploaded-image" method="post" enctype="multipart/form-data">
+          <form action="/upload-image" method="post" enctype="multipart/form-data">
             <div>
-              <label for="questionNum">Image Title</label>
-              <input type="Number" id="name" placeholder="1" value="" name="questionNum" required />
+              <label for="questionNum">Question Number </label>
+              <input type="Number" id="name" placeholder="1" name="questionNum" required />
             </div>
             <div>
-              <label for="image">Upload Image</label>
-              <input type="file" id="image" name="image" value="" required />
+              <label for="image">Upload Image </label>
+              <input type="file" id="image" name="image" required />
             </div>
             <div>
               <button type="submit">Submit</button>
             </div>
           </form>
         </div> */}
+        <div className="u-flex-justifyCenter top-margin">
+          <span className="NewGame-button" onClick={this.handleSubmit}>
+            <span className="button-text">Set Game </span>
+          </span>
+        </div>
       </>
     );
   }

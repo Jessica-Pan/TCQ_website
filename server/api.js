@@ -182,6 +182,22 @@ router.get("/grades/", (req, res) => {
   });
 });
 
+// // image upload
+// // image: questionNum, gameCode
+// router.post("/api/upload-image", (req, res) => {
+//   console.log("posting an image for question " + req.body.questionNum)
+//   const newImage = new Image({
+//     gameCode: req.body.gameCode,
+//     questionNumber: req.body.questionNum,
+//     img: {
+//       data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+//       contentType: "image/png",
+//     },
+//   });
+//   newImage.save();
+//   console.log("posted")
+// });
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

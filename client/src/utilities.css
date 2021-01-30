@@ -58,6 +58,11 @@ form {
   flex-direction: column;
 }
 
+.u-flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 .u-flex-justifyCenter {
   display: flex;
   justify-content: center;
@@ -65,6 +70,10 @@ form {
 
 .u-flex-alignCenter {
   align-items: center;
+}
+
+.u-rightMargin {
+  margin-right: 20px;
 }
 
 .u-inlineBlock {
