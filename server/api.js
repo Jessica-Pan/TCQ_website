@@ -65,6 +65,8 @@ router.get("/game-info", (req, res) => {
 
 // given the gameCode, questionNum, startTime, teamName
 router.post("/start-time/", (req, res) => {
+  console.log("moving everyone to next page");
+  socketManager.nextQ(req.body.gameCode, req.body.teamName);
   Answer.findOne({
     gameCode: req.body.gameCode,
     questionNumber: req.body.questionNum,
@@ -85,14 +87,14 @@ router.post("/start-time/", (req, res) => {
   });
 });
 
-router.post("/move-to-next-q", (req, res) => {
-  console.log("moving everyone to next page");
-  socketManager.nextQ(req.body.gameCode, req.body.teamName);
-});
-
 router.post("/proct-reset", (req, res) => {
   console.log("in proct reset post");
   socketManager.proctResetTime(req.body.gameCode, req.body.teamName);
+});
+
+router.post("/test", (req, res) => {
+  console.log("TEST TEST 123");
+  console.log(req.body.time);
 });
 
 // given the gameCode, questionNum, teamName, content

@@ -60,6 +60,13 @@ class QuestionPage extends Component {
         time: this.state.time - 1,
         reset: false,
       });
+      post("/api/test", { time: this.state.time });
+      console.log("I'm posting to the socket the answer: " + this.state.answers);
+      // post("/api/textbox-update/", {
+      //   gameCode: this.props.gameCode,
+      //   newAns: this.state.answers,
+      //   teamName: this.props.teamName,
+      // }).then(console.log("finished post request"));
     }
   };
 
@@ -89,10 +96,6 @@ class QuestionPage extends Component {
   loggedIn = () => {
     this.setState({ authorized: true, timer: setInterval(this.decreaseTimer, 1000) });
     // this.setState({ authorized: true});
-    post("/api/move-to-next-q", {
-      gameCode: this.props.gameCode,
-      teamName: this.props.teamName,
-    });
 
     post("/api/start-time/", {
       gameCode: this.props.gameCode,
@@ -106,12 +109,6 @@ class QuestionPage extends Component {
     newAnswers[partNum] = newAnswer;
     this.setState({
       answers: newAnswers,
-    });
-    console.log("I'm posting to the socket the answer: " + newAnswers);
-    post("/api/textbox-update", {
-      gameCode: this.props.gameCode,
-      newAns: newAnswers,
-      teamName: this.props.teamName,
     });
   };
 
