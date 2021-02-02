@@ -26,7 +26,6 @@ const mongoose = require("mongoose"); // library to connect to MongoDB
 const path = require("path"); // provide utilities for working with file and directory paths
 
 const bodyParser = require("body-parser");
-const fs = require("fs");
 
 const api = require("./api");
 
@@ -73,56 +72,38 @@ app.use("/api", api);
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
 app.use(express.static(reactPath));
 
-// set up EJS
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// // set up EJS
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 
-const multer = require("multer");
+// const multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname + "-" + Date.now());
+//   },
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
-const Image = require("./models/image");
+// const imgModel = require("./models/image");
 
-// getting images
-app.get("/uploaded-image", (req, res) => {
-  imgModel.find({}, (err, items) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("An error occurred", err);
-    } else {
-      res.render("imagesPage", { items: items });
-    }
-  });
-});
-
-app.post("/upload-image", upload.single("image"), (req, res, next) => {
-  var obj = {
-    questionNumber: req.body.questionNum,
-    gameCode: req.body.gameCode,
-    img: {
-      data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
-      contentType: "image/png",
-    },
-  };
-  imgModel.create(obj, (err, item) => {
-    if (err) {
-      console.log(err);
-    } else {
-      item.save();
-    }
-  });
-});
+// // getting images
+// app.get("/uploaded-image", (req, res) => {
+//   imgModel.find({}, (err, items) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(500).send("An error occurred", err);
+//     } else {
+//       res.send(items);
+//     }
+//   });
+// });
 
 // for all other routes, render index.html and let react router handle it
 app.get("*", (req, res) => {

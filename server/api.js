@@ -185,10 +185,26 @@ router.get("/grades/", (req, res) => {
   });
 });
 
+// const multer = require("multer");
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname + "-" + Date.now());
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
+// const fs = require("fs");
+// const Image = require("./models/image");
+
 // // image upload
 // // image: questionNum, gameCode
-// router.post("/api/upload-image", (req, res) => {
-//   console.log("posting an image for question " + req.body.questionNum)
+// router.post("/upload-image", upload.single("image"), (req, res) => {
+//   console.log("posting an image for question " + req.body.questionNum);
 //   const newImage = new Image({
 //     gameCode: req.body.gameCode,
 //     questionNumber: req.body.questionNum,
@@ -198,7 +214,7 @@ router.get("/grades/", (req, res) => {
 //     },
 //   });
 //   newImage.save();
-//   console.log("posted")
+//   console.log("posted");
 // });
 
 // anything else falls to this "not found" case

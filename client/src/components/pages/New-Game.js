@@ -10,6 +10,7 @@ class NewGame extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
+    let gameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
     this.state = {
       numQuestions: 1,
       parts: [1],
@@ -19,6 +20,7 @@ class NewGame extends Component {
       submitted: false,
       teams: [],
       images: [],
+      gameCode: gameCode,
     };
   }
 
@@ -42,7 +44,6 @@ class NewGame extends Component {
     for (let i = 0; i < this.state.numQuestions; i++) {
       questionPasswords = questionPasswords.concat([this.makePassword()]);
     }
-    let gameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
     post("/api/new-game/", {
       gameCode: gameCode,
       parts: this.state.parts,
@@ -63,7 +64,12 @@ class NewGame extends Component {
     //     gameCode: gameCode,
     //   });
     // }
-    this.setState({ adminPassword, questionPasswords, gameCode, submitted: true });
+    this.setState({
+      adminPassword,
+      questionPasswords,
+      gameCode: this.state.gameCoee,
+      submitted: true,
+    });
   };
 
   handleChangeNumQ = (event) => {
@@ -186,16 +192,29 @@ class NewGame extends Component {
           <span className="standard-text">Teams in this game (one per line): </span>
           <textarea className="large-text-box" onChange={this.handleChangeTeams} />
         </div>
+        <hr />
         {questionInputs}
+        <hr />
         {/* <div>
-          <h1> Upload an image. </h1>
-          <form action="/upload-image" method="post" enctype="multipart/form-data">
+          <h1> Upload images. </h1>
+          <form action="/new-game" method="post" encType="multipart/form-data">
             <div>
-              <label for="questionNum">Question Number </label>
-              <input type="Number" id="name" placeholder="1" name="questionNum" required />
+              <label htmlFor="gameCode">Game Code</label>
+              <input
+                type="text"
+                id="gameCode"
+                value={this.state.gameCode}
+                name="gameCode"
+                readOnly
+                required
+              />
             </div>
             <div>
-              <label for="image">Upload Image </label>
+              <label htmlFor="questionNum">Question Number </label>
+              <input type="Number" id="questionNum" placeholder="1" name="questionNum" required />
+            </div>
+            <div>
+              <label htmlFor="image">Upload Image </label>
               <input type="file" id="image" name="image" required />
             </div>
             <div>
