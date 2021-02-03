@@ -185,37 +185,49 @@ router.get("/grades/", (req, res) => {
   });
 });
 
-// const multer = require("multer");
+const multer = require("multer");
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.fieldname + "-" + Date.now());
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: function (req, file, cb) {
+    cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
+  },
+});
 
-// const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+}).single("myImage");
 
 // const fs = require("fs");
 // const Image = require("./models/image");
 
-// // image upload
-// // image: questionNum, gameCode
-// router.post("/upload-image", upload.single("image"), (req, res) => {
-//   console.log("posting an image for question " + req.body.questionNum);
-//   const newImage = new Image({
-//     gameCode: req.body.gameCode,
-//     questionNumber: req.body.questionNum,
-//     img: {
-//       data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
-//       contentType: "image/png",
-//     },
-//   });
-//   newImage.save();
-//   console.log("posted");
-// });
+router.post(
+  "/upload",
+  upload(req, res, (err) => {
+    console.log("Request ---", req.body);
+    console.log("Request file ---", req.file); //Here you get file.
+    // const newImage = new Image({
+    //   gameCode: req.body.gameCode,
+    //   questionNumber: req.body.questionNum,
+    //   img: {
+    //     data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+    //     contentType: "image/png",
+    //   },
+    // });
+    // newImage.save();
+    if (!err) return res.send(200).end();
+  })
+);
+
+router.get("/images", (req, res) => {
+  Image.find({
+    gameCode: req.query.gameCode,
+    questionNum: req.query.questionNum,
+  }).then((results) => {
+    res.send(results);
+  });
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

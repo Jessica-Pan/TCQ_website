@@ -137,11 +137,11 @@ class NewGame extends Component {
     this.setState({ teams: teams });
   };
 
-  enteredImage = (image, questionNum) => {
-    let images = this.state.images;
-    images.push([image, questionNum]);
-    this.setState({ images: images });
-  };
+  // enteredImage = (image, questionNum) => {
+  //   let images = this.state.images;
+  //   images.push([image, questionNum]);
+  //   this.setState({ images: images });
+  // };
 
   render() {
     if (this.state.submitted) {
@@ -173,10 +173,10 @@ class NewGame extends Component {
       <QuestionInput
         key={`question-input-${i}`}
         id={num + 1}
+        gameCode={this.state.gameCode}
         changeTime={this.changeTime}
         changeQuestion={this.changeQuestion}
         changePoints={this.changePoints}
-        enteredImage={this.enteredImage}
       />
     ));
     return (
@@ -196,8 +196,8 @@ class NewGame extends Component {
         {questionInputs}
         <hr />
         {/* <div>
-          <h1> Upload images. </h1>
-          <form action="/new-game" method="post" encType="multipart/form-data">
+          <h1> Upload images. </h1> */}
+        {/* <form action="/new-game" method="post" encType="multipart/form-data">
             <div>
               <label htmlFor="gameCode">Game Code</label>
               <input
@@ -220,8 +220,8 @@ class NewGame extends Component {
             <div>
               <button type="submit">Submit</button>
             </div>
-          </form>
-        </div> */}
+          </form> */}
+        {/* </div> */}
         <div className="u-flex-justifyCenter top-margin">
           <span className="NewGame-button" onClick={this.handleSubmit}>
             <span className="button-text">Set Game </span>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PartInput from "./PartInput.js";
+import ImageUpload from "./ImageUpload.js";
 import "../../utilities.css";
 import "../pages/New-Game.css";
 
@@ -7,6 +8,7 @@ import "../pages/New-Game.css";
 // @param handleChangePoints
 // @param handleChangeQuestion
 // @param handleChangeTime
+// @param gameCode
 class QuestionInput extends Component {
   constructor(props) {
     super(props);
@@ -92,13 +94,15 @@ class QuestionInput extends Component {
             </span>
             Time (in seconds):
             <input className="small-text-box" type="number" onChange={this.handleChangeTime} />
-            {/* IMAGE UPLOAD <span className="u-flex u-flex-alignCenter">
+            <ImageUpload gameCode={this.props.gameCode} questionNum={this.props.id} />
+            {/* IMAGE UPLOAD{" "}
+            <span className="u-flex u-flex-alignCenter">
               <h5 className="u-rightMargin"> Upload an Image </h5>
               <input
                 type="file"
                 name="image"
                 onChange={(event) => this.props.enteredImage(event.target.value, this.props.id)}
-              />{" "}
+              />
             </span> */}
             {PartInputs}
           </span>
