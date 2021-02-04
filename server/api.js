@@ -95,7 +95,7 @@ router.post("/proct-reset", (req, res) => {
 
 router.post("/test", (req, res) => {
   console.log("TEST TEST 123");
-  console.log(req.body.time);
+  console.log(req.body);
 });
 
 // given the gameCode, questionNum, teamName, content

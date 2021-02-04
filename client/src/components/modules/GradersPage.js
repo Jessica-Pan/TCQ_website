@@ -69,7 +69,7 @@ class GraderPage extends Component {
     console.log(
       `read in a grade of ${grade} for part ${partNum} for the answer for team ${answer.team}`
     );
-    // gameCode, questionNum, partNum, teamName, grade
+    // gameCode, questionNum, partNum, teamName, grade;
     post("/api/grades/", {
       gameCode: answer.gameCode,
       questionNum: answer.questionNumber,
@@ -78,6 +78,7 @@ class GraderPage extends Component {
       grade: grade,
       numParts: this.props.game.questions[answer.questionNumber - 1].length,
     });
+    // post("/api/test/", { grade: grade });
     let newGrades = this.state.grades;
     newGrades[i][partNum] = grade;
     this.setState({ grades: newGrades });
@@ -108,7 +109,7 @@ class GraderPage extends Component {
               <input
                 className="small-text-box"
                 type="number"
-                value={this.state.grades[i][partNum]}
+                value={this.state.grades[i][partNum] === -1 ? "" : this.state.grades[i][partNum]}
                 onChange={(event) =>
                   this.handleAnswerInput(answerObj, event.target.value, i, partNum)
                 }
