@@ -15,8 +15,8 @@ class ImageUpload extends React.Component {
     e.preventDefault();
     const formData = new FormData();
     formData.append("myImage", this.state.file);
-    // formData.append("gameCode", this.props.gameCode);
-    // formData.append("questionNum", this.props.questionNum);
+    formData.append("gameCode", this.props.gameCode);
+    formData.append("questionNum", this.props.questionNum);
     // formData.append("headers", {
     //   "content-type": "multipart/form-data",
     // });

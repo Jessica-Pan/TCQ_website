@@ -18,6 +18,7 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
+const path = require("path");
 
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
@@ -199,26 +200,25 @@ const upload = multer({
   limits: { fileSize: 1000000 },
 }).single("myImage");
 
-// const fs = require("fs");
-// const Image = require("./models/image");
+const fs = require("fs");
+const Image = require("./models/image");
 
-router.post(
-  "/upload",
+router.post("/upload", (req, res) => {
   upload(req, res, (err) => {
     console.log("Request ---", req.body);
-    console.log("Request file ---", req.file); //Here you get file.
-    // const newImage = new Image({
-    //   gameCode: req.body.gameCode,
-    //   questionNumber: req.body.questionNum,
-    //   img: {
-    //     data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
-    //     contentType: "image/png",
-    //   },
-    // });
-    // newImage.save();
+    console.log("Request file ---", req.file);
+    const newImage = new Image({
+      gameCode: req.body.gameCode,
+      questionNumber: req.body.questionNum,
+      img: {
+        data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+        contentType: "image/png",
+      },
+    });
+    newImage.save();
     if (!err) return res.send(200).end();
-  })
-);
+  });
+});
 
 router.get("/images", (req, res) => {
   Image.find({
