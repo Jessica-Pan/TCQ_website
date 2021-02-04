@@ -29,13 +29,26 @@ class ImageDisplay extends React.Component {
     });
   }
 
+  hexToBase64 = (hexstring) => {
+    return btoa(
+      hexstring
+        .match(/\w{2}/g)
+        .map(function (a) {
+          return String.fromCharCode(parseInt(a, 16));
+        })
+        .join("")
+    );
+  };
   render() {
     console.log(this.state.images);
     return (
       <div>
-        THIS IS WHERE IMAGES ARE DISPLAYED{" "}
-        {this.state.images.map((image) => (
-          <img src={image.img.data} />
+        Image for this question:{" "}
+        {this.state.images.map((image, i) => (
+          <img
+            key={`${this.props.gameCode}IMAGE${i}`}
+            src={"data:image/jpg;base64," + image.img.data.toString("base64")}
+          />
         ))}{" "}
       </div>
     );

@@ -61,7 +61,7 @@ class QuestionPage extends Component {
         time: this.state.time - 1,
         reset: false,
       });
-      post("/api/test", { time: this.state.time });
+      // post("/api/test", { time: this.state.time });
       console.log("I'm posting to the socket the answer: " + this.state.answers);
       // post("/api/textbox-update/", {
       //   gameCode: this.props.gameCode,
