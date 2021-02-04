@@ -96,8 +96,8 @@ class GraderPage extends Component {
           <h5> {singleQuestion} </h5>
           {this.state.answerObjects.map((answerObj, i) => (
             <div key={`answerObject-${partNum}-${i}`}>
-              {/* <h2> Answer: </h2> */}
-              <h2> Answer by {answerObj.team} </h2>
+              <h2> Answer: </h2>
+              {/* <h2> Answer by {answerObj.team} </h2> */}
               <p>{answerObj.content[partNum]}</p>
               <p>
                 Current grade:{" "}

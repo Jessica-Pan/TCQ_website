@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import QuestionLogin from "./QuestionLogin.js";
+import ImageDisplay from "./ImageDisplay.js";
 
 import "../pages/New-Game.css";
 import { socket } from "../../client-socket.js";
@@ -131,6 +132,7 @@ class QuestionPage extends Component {
       <>
         <h1> Question {this.props.questionNumber} </h1>
         <p> Time remaining: {this.state.time} </p>
+        <ImageDisplay gameCode={this.props.gameCode} questionNum={this.props.questionNumber} />
         {this.props.questions.map((singleQuestion, i) => (
           <div key={`question-${i}`}>
             <h2> Part {i + 1} </h2>

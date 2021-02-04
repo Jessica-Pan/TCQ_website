@@ -45,7 +45,7 @@ class NewGame extends Component {
       questionPasswords = questionPasswords.concat([this.makePassword()]);
     }
     post("/api/new-game/", {
-      gameCode: gameCode,
+      gameCode: this.state.gameCode,
       parts: this.state.parts,
       questions: this.state.questions,
       times: this.state.times,
@@ -67,7 +67,7 @@ class NewGame extends Component {
     this.setState({
       adminPassword,
       questionPasswords,
-      gameCode: this.state.gameCoee,
+      gameCode: this.state.gameCode,
       submitted: true,
     });
   };

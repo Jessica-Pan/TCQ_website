@@ -211,7 +211,7 @@ router.post("/upload", (req, res) => {
       gameCode: req.body.gameCode,
       questionNumber: req.body.questionNum,
       img: {
-        data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+        data: fs.readFileSync(req.file.path),
         contentType: "image/png",
       },
     });
@@ -221,10 +221,12 @@ router.post("/upload", (req, res) => {
 });
 
 router.get("/images", (req, res) => {
+  console.log("getting images from this: " + req.query.gameCode + " " + req.query.questionNum);
   Image.find({
     gameCode: req.query.gameCode,
-    questionNum: req.query.questionNum,
+    questionNumber: req.query.questionNum,
   }).then((results) => {
+    console.log(results);
     res.send(results);
   });
 });
