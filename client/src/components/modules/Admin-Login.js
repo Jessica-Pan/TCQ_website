@@ -9,7 +9,7 @@ class AdminLogin extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    this.state = {};
+    this.state = { i: 0 };
   }
 
   handleSubmit = (event) => {
@@ -41,6 +41,14 @@ class AdminLogin extends Component {
   handleInputPassword = (event) => {
     // toUpperCase here
     this.setState({ password: event.target.value });
+  };
+
+  testFunction = (event) => {
+    let i = this.state.i;
+    i += 1;
+    console.log(i);
+    post("/api/test", { num: i });
+    this.setState({ i: i });
   };
 
   render() {
@@ -80,6 +88,7 @@ class AdminLogin extends Component {
             </span>
           </div>
         </div>
+        <button onClick={this.testFunction}> TEST </button>
       </>
     );
   }
