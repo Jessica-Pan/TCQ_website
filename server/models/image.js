@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ImageSchema = new mongoose.Schema({
   gameCode: String,
   questionNumber: Number,
-  img: { data: Buffer, contentType: String },
+  img: { data: Buffer, path: String, contentType: String },
 });
 
 // compile model from schema

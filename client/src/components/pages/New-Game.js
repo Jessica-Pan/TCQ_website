@@ -131,9 +131,9 @@ class NewGame extends Component {
   };
 
   handleChangeTeams = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     let teams = event.target.value.split("\n");
-    console.log(teams);
+    // console.log(teams);
     this.setState({ teams: teams });
   };
 

@@ -211,7 +211,8 @@ router.post("/upload", (req, res) => {
       gameCode: req.body.gameCode,
       questionNumber: req.body.questionNum,
       img: {
-        data: fs.readFileSync(req.file.path),
+        // data: fs.readFileSync(req.file.path),
+        path: req.file.path,
         contentType: "image/png",
       },
     });

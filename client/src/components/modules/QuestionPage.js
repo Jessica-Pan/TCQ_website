@@ -62,7 +62,7 @@ class QuestionPage extends Component {
         reset: false,
       });
       // post("/api/test", { time: this.state.time });
-      console.log("I'm posting to the socket the answer: " + this.state.answers);
+      // console.log("I'm posting to the socket the answer: " + this.state.answers);
       // post("/api/textbox-update/", {
       //   gameCode: this.props.gameCode,
       //   newAns: this.state.answers,
@@ -95,7 +95,8 @@ class QuestionPage extends Component {
   };
 
   loggedIn = () => {
-    this.setState({ authorized: true, timer: setInterval(this.decreaseTimer, 1000) });
+    const intervalId = setInterval(this.decreaseTimer, 1000);
+    this.setState({ authorized: true, timer: intervalId });
     // this.setState({ authorized: true});
 
     post("/api/start-time/", {
@@ -112,6 +113,10 @@ class QuestionPage extends Component {
       answers: newAnswers,
     });
   };
+
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
 
   render() {
     if (this.state.authorized === false) {

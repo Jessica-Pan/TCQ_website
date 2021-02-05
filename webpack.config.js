@@ -38,6 +38,14 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.(html)$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
+      },
+      {
         test: /\.(scss|css)$/,
         use: [
           {
@@ -56,12 +64,45 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(md)$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+          {
+            loader: "markdown-loader",
+          },
+        ],
+      },
     ],
   },
+  // target: "node",
   resolve: {
     extensions: ["*", ".js", ".jsx"],
+    fallback: {
+      path: require.resolve("path-browserify"),
+      util: require.resolve("util/"),
+      crypto: require.resolve("crypto-browserify"),
+      http: require.resolve("stream-http"),
+      buffer: require.resolve("buffer/"),
+      https: require.resolve("https-browserify"),
+      vm: require.resolve("vm-browserify"),
+      os: require.resolve("os-browserify/browser"),
+      stream: require.resolve("stream-browserify"),
+      constants: require.resolve("constants-browserify"),
+      zlib: require.resolve("browserify-zlib"),
+      assert: require.resolve("assert/"),
+      fs: false,
+      child_process: false,
+      worker_threads: false,
+      net: false,
+    },
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ContextReplacementPlugin(/caniuse-lite[\/\\]data[\/\\]regions/, /^$/),
+  ],
   devServer: {
     historyApiFallback: true,
     contentBase: "./client/dist",
