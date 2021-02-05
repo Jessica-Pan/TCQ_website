@@ -57,7 +57,7 @@ class ImageDisplay extends React.Component {
           <img
             key={`${this.props.gameCode}IMAGE${i}`}
             alt={`Image Number ${i}`}
-            src={require("../../../../" + image.img.path)}
+            src={require(`../../../../${image.img.path}`)}
             // src={"data:image/jpg;base64," + image.img.data.toString("base64")}
           />
         ))}{" "}

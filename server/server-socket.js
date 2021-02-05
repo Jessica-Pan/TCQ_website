@@ -40,7 +40,7 @@ const updateTextbox = (newAns, gameCode, teamName) => {
   console.log("done emitting");
 };
 
-const nextQ = (gameCode, teamName) => {
+const startQuestion = (gameCode, teamName) => {
   io.emit(`nextQ:${teamName}:${gameCode}`);
   console.log("next Q socket emitted");
 };
@@ -76,7 +76,7 @@ module.exports = {
   removeUser: removeUser,
   addPlayerToRoom: addPlayerToRoom,
   updateTextbox: updateTextbox,
-  nextQ: nextQ,
+  startQuestion: startQuestion,
   proctResetTime: proctResetTime,
   gradeChanged: gradeChanged,
 

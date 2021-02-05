@@ -30,6 +30,7 @@ router.post("/initsocket", (req, res) => {
 //given gameCode, add player to room
 router.post("/new-player", (req, res) => {
   socketManager.addPlayerToRoom(req.body.user, req.body.gameCode, req.body.teamName);
+  res.sendStatus(204).end();
 });
 
 //given gameCode, updatedAns, teamName
@@ -37,6 +38,7 @@ router.post("/textbox-update", (req, res) => {
   console.log("I'm in the post request for this answer");
   console.log(req.body.newAns);
   socketManager.updateTextbox(req.body.newAns, req.body.gameCode, req.body.teamName);
+  res.sendStatus(204).end();
 });
 
 // takes the game code as the parameter code
@@ -58,10 +60,10 @@ router.post("/new-game/", (req, res) => {
 });
 
 router.get("/game-info", (req, res) => {
-  console.log("in get");
-  console.log(`QUERY: ${req.query.gameCode}`);
+  // console.log("in get");
+  // console.log(`QUERY: ${req.query.gameCode}`);
   Game.findOne({ gameCode: req.query.gameCode }).then((results) => {
-    console.log(results);
+    // console.log(results);
     res.send(results);
   });
 });
@@ -69,7 +71,7 @@ router.get("/game-info", (req, res) => {
 // given the gameCode, questionNum, startTime, teamName
 router.post("/start-time/", (req, res) => {
   console.log("moving everyone to next page");
-  socketManager.nextQ(req.body.gameCode, req.body.teamName);
+  socketManager.startQuestion(req.body.gameCode, req.body.teamName);
   Answer.findOne({
     gameCode: req.body.gameCode,
     questionNumber: req.body.questionNum,
@@ -87,9 +89,10 @@ router.post("/start-time/", (req, res) => {
       });
       newAnswer.save().then(() => {
         res.sendStatus(204).end();
-      })
+      });
     } else {
-      res.sendStatus(403).end();
+      console.log("The answer already exists");
+      res.sendStatus(204).end();
     }
   });
 });
@@ -229,12 +232,15 @@ router.post("/upload", (req, res) => {
         contentType: "image/png",
       },
     });
-    newImage.save().then(() => {
-      res.sendStatus(200).end();
-    }).catch(e => {
-      console.error(e);
-      res.sendStatus(500).end();
-    })
+    newImage
+      .save()
+      .then(() => {
+        res.sendStatus(200).end();
+      })
+      .catch((e) => {
+        console.error(e);
+        res.sendStatus(500).end();
+      });
   });
 });
 

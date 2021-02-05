@@ -88,7 +88,7 @@ class AdminLogin extends Component {
             </span>
           </div>
         </div>
-        <button onClick={this.testFunction}> TEST </button>
+        {/* <button onClick={this.testFunction}> TEST </button> */}
       </>
     );
   }

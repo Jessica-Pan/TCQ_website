@@ -36,7 +36,8 @@ class QuestionPage extends Component {
 
     socket.on(`nextQ:${this.props.teamName}:${this.props.gameCode}`, () => {
       if (!this.state.authorized) {
-        this.loggedIn();
+        const intervalId = setInterval(this.decreaseTimer, 1000);
+        this.setState({ authorized: true, intervalId: intervalId });
       }
     });
 
@@ -72,7 +73,7 @@ class QuestionPage extends Component {
   };
 
   handleOutOfTime = () => {
-    clearInterval(this.state.timer);
+    clearInterval(this.state.intervalId);
     console.log(
       "I'm posting this as the answer to question " +
         this.props.questionNumber +
@@ -96,7 +97,7 @@ class QuestionPage extends Component {
 
   loggedIn = () => {
     const intervalId = setInterval(this.decreaseTimer, 1000);
-    this.setState({ authorized: true, timer: intervalId });
+    this.setState({ authorized: true, intervalId: intervalId });
     // this.setState({ authorized: true});
 
     post("/api/start-time/", {
@@ -112,10 +113,17 @@ class QuestionPage extends Component {
     this.setState({
       answers: newAnswers,
     });
+    // post("/api/test", { time: this.state.time });
+    console.log("I'm posting to the socket the answer: " + this.state.answers);
+    post("/api/textbox-update/", {
+      gameCode: this.props.gameCode,
+      newAns: newAnswers,
+      teamName: this.props.teamName,
+    }).then(console.log("finished post request"));
   };
 
   componentWillUnmount() {
-    clearInterval(this.state.timer);
+    clearInterval(this.state.intervalId);
   }
 
   render() {

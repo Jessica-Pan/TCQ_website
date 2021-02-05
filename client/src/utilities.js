@@ -30,7 +30,7 @@ function convertToJSON(res) {
     .catch((error) => {
       // throw an error containing the text that couldn't be converted to JSON
       return res.text().then((text) => {
-        throw `API request's result could not be converted to a JSON object: \n${text}`;
+        console.log(`API request's result could not be converted to a JSON object: \n${text}`);
       });
     });
 }
