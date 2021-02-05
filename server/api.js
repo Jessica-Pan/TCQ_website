@@ -51,7 +51,9 @@ router.post("/new-game/", (req, res) => {
     adminPassword: req.body.adminPassword,
     teams: req.body.teams,
   });
-  newGame.save();
+  newGame.save().then(() => {
+    res.sendStatus(201).end();
+  });
   console.log("POSTED");
 });
 
@@ -83,7 +85,11 @@ router.post("/start-time/", (req, res) => {
         startTime: currDate,
         grade: [-1],
       });
-      newAnswer.save();
+      newAnswer.save().then(() => {
+        res.sendStatus(204).end();
+      })
+    } else {
+      res.sendStatus(403).end();
     }
   });
 });
@@ -91,11 +97,13 @@ router.post("/start-time/", (req, res) => {
 router.post("/proct-reset", (req, res) => {
   console.log("in proct reset post");
   socketManager.proctResetTime(req.body.gameCode, req.body.teamName);
+  res.sendStatus(204).end();
 });
 
 router.post("/test", (req, res) => {
   console.log("TEST TEST 123");
   console.log(req.body);
+  res.sendStatus(204).end();
 });
 
 // given the gameCode, questionNum, teamName, content
@@ -113,9 +121,11 @@ router.post("/student-answers/", (req, res) => {
       console.log(answer);
       answer.markModified("content");
       answer.save();
+      res.sendStatus(204).end();
     } else {
       console.log("Could not find the answer with these attributes:");
       console.log(req.body.questionNum + " " + req.body.gameCode + " " + req.body.teamName);
+      res.sendStatus(404).end();
     }
   });
 });
@@ -171,9 +181,11 @@ router.post("/grades/", (req, res) => {
         newGrades
       );
       console.log("done submitting");
+      res.sendStatus(204).end();
     } else {
       console.log("Could not find the answer with these attributes:");
       console.log(req.body.questionNum + " " + req.body.gameCode + " " + req.body.teamName);
+      res.sendStatus(401).end();
     }
   });
 });
@@ -207,6 +219,7 @@ router.post("/upload", (req, res) => {
   upload(req, res, (err) => {
     console.log("Request ---", req.body);
     console.log("Request file ---", req.file);
+    if (!err) return res.send(200).end();
     const newImage = new Image({
       gameCode: req.body.gameCode,
       questionNumber: req.body.questionNum,
@@ -215,8 +228,12 @@ router.post("/upload", (req, res) => {
         contentType: "image/png",
       },
     });
-    newImage.save();
-    if (!err) return res.send(200).end();
+    newImage.save().then(() => {
+      res.sendStatus(200).end();
+    }).catch(e => {
+      console.error(e);
+      res.sendStatus(500).end();
+    })
   });
 });
 
