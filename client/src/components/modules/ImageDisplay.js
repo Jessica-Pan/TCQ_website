@@ -3,7 +3,10 @@ import "../../utilities.css";
 
 import { get, post } from "../../utilities.js";
 
-const path = require("path");
+// const path = require("path");
+// const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
+const PUBLIC_URL = "http://localhost:3000";
+
 // PROPS:
 // gameCode
 // questionNum
@@ -41,23 +44,28 @@ class ImageDisplay extends React.Component {
         .join("")
     );
   };
+
+  formatURL = (extension) => {
+    if (extension.includes("public/")) {
+      extension = extension.substr(extension.indexOf("/"));
+    }
+    const finalPath = PUBLIC_URL + extension;
+    console.log("here's the final path for the image: ");
+    console.log(finalPath);
+    return finalPath;
+  };
   render() {
     console.log(this.state.images);
     return (
       <div>
-        Image for this question: TEST 1 : <img src={require("./525.jpg")} alt="test 1" />
-        TEST 2 : <img src={require("../525.jpg")} alt="test 2" />
-        TEST 3 : <img src={require("../../525.jpg")} alt="test 3" />
-        TEST 4 : <img src={require("../../../525.jpg")} alt="test 4" />
-        TEST 5 : <img src={require("../../../../public/525.jpg")} alt="test 5" />
-        TEST 6 :{" "}
-        <img src={require("../../../../public/uploads/IMAGE-1612477613912.jpg")} alt="test 6" />
+        {/* Image for this question:
+        TEST: <img src={"http://localhost:3000/uploads/IMAGE-1612477613912.jpg"} alt="test" /> */}
         {this.state.images.map((image, i) => (
           // <> {path.join("../../../../", image.img.path)} </>
           <img
             key={`${this.props.gameCode}IMAGE${i}`}
             alt={`Image Number ${i}`}
-            src={require(`../../../../${image.img.path}`)}
+            src={this.formatURL(image.img.path)}
             // src={"data:image/jpg;base64," + image.img.data.toString("base64")}
           />
         ))}{" "}
