@@ -36,8 +36,7 @@ class ProctorPage extends Component {
           </div>
         ))}
 
-        <ProctorReset gameCode = {this.props.game.gameCode}/>
-          
+        <ProctorReset gameCode={this.props.game.gameCode} teams={this.props.game.teams} />
       </>
     );
   }
