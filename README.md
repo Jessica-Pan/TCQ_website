@@ -1,3 +1,7 @@
+## deployment notes:
+
+-Note that the public url in ImageDisplay.js is hardcoded, which will need to be changed.
+
 ## Known issues
 
 -None
