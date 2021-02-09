@@ -5,6 +5,7 @@ import "./New-Game.css";
 import "./LoginPages.css";
 
 import { get, post } from "../../utilities.js";
+import router from "../../../../server/api.js";
 
 class NewGame extends Component {
   constructor(props) {
@@ -23,6 +24,19 @@ class NewGame extends Component {
       gameCode: gameCode,
     };
   }
+
+  componentDidMount() {
+    this.checkUniqueGameCode();
+  }
+
+  checkUniqueGameCode = () => {
+    router.get("/game-info", { gameCode: this.state.gameCode }).then((results) => {
+      if (results !== null) {
+        const newGameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
+        this.setState({ gameCode: newGameCode });
+      }
+    });
+  };
 
   makePassword = (characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789") => {
     let result = "";
