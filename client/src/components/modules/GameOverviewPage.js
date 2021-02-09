@@ -127,6 +127,28 @@ class GameOverviewPage extends Component {
     );
   };
 
+  cuttOff = (string) => {
+    string = string.split(" ").slice(0, 6).join(" ") + "...";
+    return string;
+  };
+
+  toHTMLTable = (array) => {
+    return (
+      <table>
+        {array[0].split("\t").map((elem) => (
+          <th> {elem} </th>
+        ))}
+        {array.slice(1).map((line) => (
+          <tr>
+            {line.split("\t").map((elem) => (
+              <td> {elem} </td>
+            ))}
+          </tr>
+        ))}
+      </table>
+    );
+  };
+
   render() {
     console.log(this.state.gradeTable);
     return (
@@ -143,18 +165,14 @@ class GameOverviewPage extends Component {
             {question.map((singleQuestion, j) => (
               <div key={`question-${i}-part-${j}`}>
                 <h4> Part {j + 1}: </h4>
-                <p> Question: {singleQuestion} </p>
+                <p> Question: {this.cuttOff(singleQuestion)} </p>
                 <p> This is worth {this.props.game.points[i][j]} points. </p>
               </div>
             ))}
           </div>
         ))}
         <button onClick={this.getGrades}> Show grades </button>
-        {this.state.gradeTable.map((line) => (
-          <p key={`display-${line}`}>
-            {line} <br />
-          </p>
-        ))}
+        {this.toHTMLTable(this.state.gradeTable)}
         <button onClick={this.handleDownload}> Download </button>
       </>
     );
