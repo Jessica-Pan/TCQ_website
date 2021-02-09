@@ -6,9 +6,13 @@ On the backend, this uses only MongoDB.
 
 -Note that the public url in ImageDisplay.js is hardcoded, which will need to be changed.
 
+## to be done
+
+-Put the values of the questions in the questions inputs for the edit game page.
+
 ## Known issues
 
--None
+-Not tested to scale
 
 ## EXISTING TEST GAMES
 

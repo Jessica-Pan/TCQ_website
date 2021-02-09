@@ -201,6 +201,30 @@ router.get("/grades/", (req, res) => {
   });
 });
 
+// post("/api/update-game/", {
+//   gameCode: this.state.gameCode,
+//   parts: this.state.parts,
+//   questions: this.state.questions,
+//   times: this.state.times,
+//   points: this.state.points,
+//   teams: this.state.teams,
+// });
+router.post("/update-game/", (req, res) => {
+  Game.find({ gameCode: req.query.gameCode }).then((game) => {
+    game.parts = req.query.parts;
+    game.questions = req.query.questions;
+    game.times = req.query.times;
+    game.points = req.query.points;
+    game.teams = req.query.teams;
+    game.markModified("parts");
+    game.markModified("questions");
+    game.markModified("times");
+    game.markModified("points");
+    game.markModified("teams");
+    game.save();
+  });
+});
+
 const multer = require("multer");
 
 const storage = multer.diskStorage({

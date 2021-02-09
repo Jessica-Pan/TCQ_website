@@ -82,6 +82,7 @@ class AdminLogin extends Component {
               <option value="proctor">Proctor</option>
               <option value="grader">Grader</option>
               <option value="info">Game Info</option>
+              <option value="edit">Edit Game</option>
             </select>
             <span className="button" onClick={this.handleSubmit}>
               <span className="button-text">Submit </span>

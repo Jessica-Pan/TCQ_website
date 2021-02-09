@@ -1,50 +1,50 @@
 import React, { Component } from "react";
-import QuestionInput from "../modules/QuestionInput.js";
+import QuestionInput from "./QuestionInput.js";
 import "../../utilities.css";
-import "./New-Game.css";
-import "./LoginPages.css";
+import "../pages/New-Game.css";
+import "../pages/LoginPages.css";
 
 import { get, post } from "../../utilities.js";
 
-class NewGame extends Component {
+class EditGamePage extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    let gameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
     this.state = {
-      numQuestions: 1,
-      parts: [1],
-      questions: [""],
-      times: [0],
-      points: [0],
+      numQuestions: this.props.game.questions.length,
+      parts: this.props.game.questions.map((question) => question.length),
+      questions: this.props.game.questions,
+      times: this.props.game.times,
+      points: this.props.game.points,
       submitted: false,
-      teams: [],
+      teams: this.props.game.teams,
       images: [],
-      gameCode: gameCode,
+      gameCode: this.props.game.gameCode,
     };
   }
 
-  componentDidMount() {
-    this.checkUniqueGameCode();
-  }
+  //   componentDidMount() {
+  //     this.setState({
+  //       numQuestions: this.props.game.questions.length,
+  //       parts: this.props.game.questions.map((question) => question.length),
+  //       questions: this.props.game.questions,
+  //       times: this.props.game.times,
+  //       points: this.props.game.points,
+  //       submitted: false,
+  //       teams: this.props.game.teams,
+  //       images: [],
+  //       gameCode: this.props.game.gameCode,
+  //     });
+  //   }
 
-  checkUniqueGameCode = () => {
-    get("/game-info", { gameCode: this.state.gameCode }).then((results) => {
-      if (results !== null) {
-        const newGameCode = this.makePassword("ABCDEFGHJKLMNPQRSTUVWXYZ");
-        this.setState({ gameCode: newGameCode });
-      }
-    });
-  };
-
-  makePassword = (characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789") => {
-    let result = "";
-    const charactersLength = characters.length;
-    for (var i = 0; i < 6; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  };
+  //   makePassword = (characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789") => {
+  //     let result = "";
+  //     const charactersLength = characters.length;
+  //     for (var i = 0; i < 6; i++) {
+  //       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  //     }
+  //     return result;
+  //   };
 
   handleSubmit = (event) => {
     console.log("SUBMIT");
@@ -52,31 +52,19 @@ class NewGame extends Component {
       alert("Input the teams that will be in this game");
       return;
     }
-    let adminPassword = this.makePassword();
-    let questionPasswords = [];
-    for (let i = 0; i < this.state.numQuestions; i++) {
-      questionPasswords = questionPasswords.concat([this.makePassword()]);
-    }
-    post("/api/new-game/", {
+    // let adminPassword = this.makePassword();
+    // let questionPasswords = [];
+    // for (let i = 0; i < this.state.numQuestions; i++) {
+    //   questionPasswords = questionPasswords.concat([this.makePassword()]);
+    // }
+    post("/api/update-game/", {
       gameCode: this.state.gameCode,
       parts: this.state.parts,
       questions: this.state.questions,
       times: this.state.times,
       points: this.state.points,
-      questionPasswords: questionPasswords,
-      adminPassword: adminPassword,
       teams: this.state.teams,
     });
-    // IMAGE UPLOAD
-    // for (let i = 0; i < this.state.images.length; i++) {
-    //   const relevant = this.state.images[i];
-    //   console.log(relevant);
-    //   post("/upload-image", {
-    //     image: relevant[0],
-    //     questionNum: relevant[1],
-    //     gameCode: gameCode,
-    //   });
-    // }
     this.setState({
       adminPassword,
       questionPasswords,
@@ -160,7 +148,7 @@ class NewGame extends Component {
     if (this.state.submitted) {
       return (
         <>
-          You have made a new game! The code is {this.state.gameCode}. The admin password is{" "}
+          You have updated the game! The code is {this.state.gameCode}. The admin password is{" "}
           {this.state.adminPassword}.
           <div> Here are all of the teams in this game: {this.state.teams.join(", ")} </div> Here
           are your questions and their passwords:
@@ -198,12 +186,21 @@ class NewGame extends Component {
         <div className="New-Game-numQ">
           <span className="standard-text">Number of Questions:</span>
           <span className="New-Game-numQ-span">
-            <input className="small-text-box" type="number" onChange={this.handleChangeNumQ} />
+            <input
+              className="small-text-box"
+              value={this.state.numQuestions}
+              type="number"
+              onChange={this.handleChangeNumQ}
+            />
           </span>
         </div>
         <div>
           <span className="standard-text">Teams in this game (one per line): </span>
-          <textarea className="large-text-box" onChange={this.handleChangeTeams} />
+          <textarea
+            className="large-text-box"
+            value={this.state.teams.join("\n")}
+            onChange={this.handleChangeTeams}
+          />
         </div>
         <hr />
         {questionInputs}
@@ -218,4 +215,4 @@ class NewGame extends Component {
   }
 }
 
-export default NewGame;
+export default EditGamePage;
