@@ -1,3 +1,7 @@
+This is a website to handle the Team Challenge Questions in a High School Sciencebowl game. This website allows admin to enter questions (including images) with custom time limits and point values, then provides a game code and various passwords to be used during gameplay. Students, with the game code and question passwords, can go through and answer the questions collaboratively. Admin can proctor those students (see when they started the game and reset the timer if something goes wrong), grade those answers, or look at game info.
+
+On the backend, this uses only MongoDB.
+
 ## deployment notes:
 
 -Note that the public url in ImageDisplay.js is hardcoded, which will need to be changed.
