@@ -40,8 +40,9 @@ const updateTextbox = (newAns, gameCode, teamName) => {
   console.log("done emitting");
 };
 
-const startQuestion = (gameCode, teamName) => {
+const startQuestion = (gameCode, teamName, currTime, questionNum) => {
   io.emit(`nextQ:${teamName}:${gameCode}`);
+  io.emit(`startQ:${gameCode}`, { team: teamName, time: currTime, questionNum: questionNum });
   console.log("next Q socket emitted");
 };
 

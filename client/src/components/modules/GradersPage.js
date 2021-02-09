@@ -12,11 +12,11 @@ class GraderPage extends Component {
     this.state = { questionNum: 1, answerObjects: [], grades: [] };
     console.log("HERE" + `grades${this.props.game.gameCode}`);
     socket.on(`grades${this.props.game.gameCode}`, (results) => {
-      console.log("HERE 1");
-      console.log(results);
-      console.log(results.questionNum);
+      // console.log("HERE 1");
+      // console.log(results);
+      // console.log(results.questionNum);
       if (results.questionNum === this.state.questionNum) {
-        console.log("HERE 2");
+        // console.log("HERE 2");
         let objectsArray = [...this.state.answerObjects];
         console.log(objectsArray);
         let relevantAnswer = this.state.answerObjects.filter((answer) => {

@@ -3,12 +3,21 @@ import ProctorReset from "./ProctorReset.js";
 
 import { get, post } from "../../utilities.js";
 
+import { socket } from "../../client-socket.js";
+
 // prop: game: the game object
 class ProctorPage extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
     this.state = { answerObjects: [] };
+
+    //`startQ:${gameCode}`, { team: teamName, time: currTime }
+    socket.on(`startQ:${this.props.game.gameCode}`, (data) => {
+      let answers = this.state.answerObjects;
+      answers.push({ questionNumber: data.questionNum, startTime: data.time, team: data.team });
+      this.setState({ answers });
+    });
   }
 
   componentDidMount = () => {

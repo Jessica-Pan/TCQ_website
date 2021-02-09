@@ -71,14 +71,14 @@ router.get("/game-info", (req, res) => {
 // given the gameCode, questionNum, startTime, teamName
 router.post("/start-time/", (req, res) => {
   console.log("moving everyone to next page");
-  socketManager.startQuestion(req.body.gameCode, req.body.teamName);
+  const currDate = new Date().toLocaleString();
+  socketManager.startQuestion(req.body.gameCode, req.body.teamName, currDate, req.body.questionNum);
   Answer.findOne({
     gameCode: req.body.gameCode,
     questionNumber: req.body.questionNum,
     team: req.body.teamName,
   }).then((answer) => {
     if (answer === null) {
-      const currDate = new Date().toLocaleString();
       const newAnswer = new Answer({
         gameCode: req.body.gameCode,
         questionNumber: req.body.questionNum,
