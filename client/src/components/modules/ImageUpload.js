@@ -25,6 +25,7 @@ class ImageUpload extends React.Component {
         "content-type": "multipart/form-data",
       },
     };
+    console.log("POSTING THE IMAGE");
     axios
       .post("/api/upload", formData, config)
       .then((response) => {

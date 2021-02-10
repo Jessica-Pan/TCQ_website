@@ -186,7 +186,11 @@ class NewGame extends Component {
       <QuestionInput
         key={`question-input-${i}`}
         id={num + 1}
+        numParts={1}
+        questions={[""]}
+        points={[0]}
         gameCode={this.state.gameCode}
+        time={this.state.times[i]}
         changeTime={this.changeTime}
         changeQuestion={this.changeQuestion}
         changePoints={this.changePoints}

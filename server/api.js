@@ -210,18 +210,24 @@ router.get("/grades/", (req, res) => {
 //   teams: this.state.teams,
 // });
 router.post("/update-game/", (req, res) => {
-  Game.find({ gameCode: req.query.gameCode }).then((game) => {
-    game.parts = req.query.parts;
-    game.questions = req.query.questions;
-    game.times = req.query.times;
-    game.points = req.query.points;
-    game.teams = req.query.teams;
+  console.log("finding game for " + req.body.gameCode);
+  Game.findOne({ gameCode: req.body.gameCode }).then((game) => {
+    console.log(game);
+    game.parts = req.body.parts;
     game.markModified("parts");
+    game.questions = req.body.questions;
     game.markModified("questions");
+    game.times = req.body.times;
     game.markModified("times");
+    game.points = req.body.points;
     game.markModified("points");
+    game.teams = req.body.teams;
     game.markModified("teams");
+    game.questionPasswords = req.body.questionPasswords;
+    game.markModified("questionPasswords");
     game.save();
+    console.log("updated the game");
+    res.sendStatus(204).end();
   });
 });
 
@@ -246,7 +252,7 @@ router.post("/upload", (req, res) => {
   upload(req, res, (err) => {
     console.log("Request ---", req.body);
     console.log("Request file ---", req.file);
-    if (!err) return res.send(200).end();
+    // if (!err) return res.send(200).end();
     const newImage = new Image({
       gameCode: req.body.gameCode,
       questionNumber: req.body.questionNum,
@@ -259,6 +265,7 @@ router.post("/upload", (req, res) => {
     newImage
       .save()
       .then(() => {
+        console.log("saved the image");
         res.sendStatus(200).end();
       })
       .catch((e) => {

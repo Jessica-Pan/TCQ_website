@@ -127,11 +127,6 @@ class GameOverviewPage extends Component {
     );
   };
 
-  cuttOff = (string) => {
-    string = string.split(" ").slice(0, 6).join(" ") + "...";
-    return string;
-  };
-
   toHTMLTable = (array) => {
     return (
       <table>
@@ -165,7 +160,7 @@ class GameOverviewPage extends Component {
             {question.map((singleQuestion, j) => (
               <div key={`question-${i}-part-${j}`}>
                 <h4> Part {j + 1}: </h4>
-                <p> Question: {this.cuttOff(singleQuestion)} </p>
+                <p> Question: {singleQuestion} </p>
                 <p> This is worth {this.props.game.points[i][j]} points. </p>
               </div>
             ))}

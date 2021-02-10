@@ -26,10 +26,16 @@ class PartInput extends Component {
       <>
         <h3> Part {this.props.id} </h3>
         Points:
-        <input className="small-text-box" type="number" onChange={this.handleChangePoints} />
+        <input
+          className="small-text-box"
+          type="number"
+          value={this.props.points}
+          onChange={this.handleChangePoints}
+        />
         <div className="standard-text">
           Question text: <br />
           <textarea
+            value={this.props.question}
             rows="10"
             cols="80"
             className="large-text-box"

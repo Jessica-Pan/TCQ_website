@@ -13,9 +13,9 @@ class QuestionInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numParts: 1,
-      questions: [""],
-      points: [0],
+      numParts: this.props.numParts,
+      questions: this.props.questions,
+      points: this.props.points,
     };
     // Initialize Default State
   }
@@ -70,6 +70,8 @@ class QuestionInput extends Component {
       <PartInput
         key={`part-input-${i}`}
         id={i + 1}
+        question={this.state.questions[i]}
+        points={this.state.points[i]}
         changeQuestion={this.handleChangeQuestion}
         changePoints={this.handleChangePoints}
       />
@@ -87,13 +89,19 @@ class QuestionInput extends Component {
                   <input
                     className="small-text-box"
                     type="number"
+                    value={this.state.numParts}
                     onChange={this.handleChangeNumParts}
                   />
                 </span>
               </span>
             </span>
             Time (in seconds):
-            <input className="small-text-box" type="number" onChange={this.handleChangeTime} />
+            <input
+              className="small-text-box"
+              type="number"
+              value={this.props.time}
+              onChange={this.handleChangeTime}
+            />
             <ImageUpload gameCode={this.props.gameCode} questionNum={this.props.id} />
             {/* IMAGE UPLOAD{" "}
             <span className="u-flex u-flex-alignCenter">

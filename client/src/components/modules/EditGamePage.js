@@ -20,6 +20,7 @@ class EditGamePage extends Component {
       teams: this.props.game.teams,
       images: [],
       gameCode: this.props.game.gameCode,
+      adminPassword: this.props.game.adminPassword,
     };
   }
 
@@ -37,14 +38,14 @@ class EditGamePage extends Component {
   //     });
   //   }
 
-  //   makePassword = (characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789") => {
-  //     let result = "";
-  //     const charactersLength = characters.length;
-  //     for (var i = 0; i < 6; i++) {
-  //       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  //     }
-  //     return result;
-  //   };
+  makePassword = (characters = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789") => {
+    let result = "";
+    const charactersLength = characters.length;
+    for (var i = 0; i < 6; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
 
   handleSubmit = (event) => {
     console.log("SUBMIT");
@@ -52,11 +53,11 @@ class EditGamePage extends Component {
       alert("Input the teams that will be in this game");
       return;
     }
-    // let adminPassword = this.makePassword();
-    // let questionPasswords = [];
-    // for (let i = 0; i < this.state.numQuestions; i++) {
-    //   questionPasswords = questionPasswords.concat([this.makePassword()]);
-    // }
+    let adminPassword = this.makePassword();
+    let questionPasswords = [];
+    for (let i = 0; i < this.state.numQuestions; i++) {
+      questionPasswords = questionPasswords.concat([this.makePassword()]);
+    }
     post("/api/update-game/", {
       gameCode: this.state.gameCode,
       parts: this.state.parts,
@@ -64,9 +65,9 @@ class EditGamePage extends Component {
       times: this.state.times,
       points: this.state.points,
       teams: this.state.teams,
+      questionPasswords,
     });
     this.setState({
-      adminPassword,
       questionPasswords,
       gameCode: this.state.gameCode,
       submitted: true,
@@ -174,7 +175,11 @@ class EditGamePage extends Component {
       <QuestionInput
         key={`question-input-${i}`}
         id={num + 1}
+        numParts={this.state.parts[i]}
+        questions={this.state.questions[i]}
+        points={this.state.points[i]}
         gameCode={this.state.gameCode}
+        time={this.state.times[i]}
         changeTime={this.changeTime}
         changeQuestion={this.changeQuestion}
         changePoints={this.changePoints}
@@ -205,6 +210,11 @@ class EditGamePage extends Component {
         <hr />
         {questionInputs}
         <hr />
+
+        <p className="u-flex-justifyCenter">
+          {" "}
+          Note: updating the game will change the question passwords.{" "}
+        </p>
         <div className="u-flex-justifyCenter top-margin">
           <span className="NewGame-button" onClick={this.handleSubmit}>
             <span className="button-text">Set Game </span>
