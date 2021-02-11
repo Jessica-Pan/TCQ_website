@@ -5,7 +5,7 @@ import { get, post } from "../../utilities.js";
 
 // const path = require("path");
 // const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
-const PUBLIC_URL = "http://localhost:3000";
+const PUBLIC_URL = "";
 
 // PROPS:
 // gameCode
