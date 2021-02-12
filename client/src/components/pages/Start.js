@@ -22,10 +22,7 @@ class Start extends Component {
             </Link>
           </span>
           <span className="button">
-            <Link to="/admin/" className="button-text">
-              {" "}
-              admin{" "}
-            </Link>
+            <a href="/admin/" className="button-text">admin</a>
           </span>
         </div>
       </>
