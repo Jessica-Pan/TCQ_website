@@ -9,7 +9,9 @@ VOLUME /app/public/uploads
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
-ADD . /app/
+ADD package.json /app/
+ADD package-lock.json /app/
 RUN npm install
+ADD . /app/
 RUN npx webpack
 ENTRYPOINT ["npm", "start"]
