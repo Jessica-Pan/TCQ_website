@@ -76,7 +76,7 @@ class QuestionInput extends Component {
         changePoints={this.handleChangePoints}
       />
     ));
-
+    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue);
     return (
       <>
         <div>
@@ -102,6 +102,7 @@ class QuestionInput extends Component {
               value={this.props.time}
               onChange={this.handleChangeTime}
             />
+            <p>Total points for this question: {this.state.points.reduce(reducer)} </p>
             <ImageUpload gameCode={this.props.gameCode} questionNum={this.props.id} />
             {/* IMAGE UPLOAD{" "}
             <span className="u-flex u-flex-alignCenter">
