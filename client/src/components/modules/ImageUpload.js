@@ -7,6 +7,7 @@ class ImageUpload extends React.Component {
     super(props);
     this.state = {
       file: null,
+      part: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -17,6 +18,7 @@ class ImageUpload extends React.Component {
     formData.append("myImage", this.state.file);
     formData.append("gameCode", this.props.gameCode);
     formData.append("questionNum", this.props.questionNum);
+    formData.append("partNum", this.state.part);
     // formData.append("headers", {
     //   "content-type": "multipart/form-data",
     // });
@@ -37,10 +39,15 @@ class ImageUpload extends React.Component {
     this.setState({ file: e.target.files[0] });
   }
 
+  onChangePart = (e) => {
+    this.setState({ part: e.target.value });
+  };
+
   render() {
     return (
       <form className="u-flex u-flex-alignCenter" onSubmit={this.onFormSubmit}>
         <h4 className="u-rightMargin">Image Upload </h4>
+        <input type="number" onChange={this.onChangePart} required />
         <input type="file" name="myImage" onChange={this.onChange} required />
         <button type="submit">Upload</button>
       </form>

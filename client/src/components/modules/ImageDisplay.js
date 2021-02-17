@@ -6,6 +6,7 @@ import { get, post } from "../../utilities.js";
 // const path = require("path");
 // const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 const PUBLIC_URL = "";
+// const PUBLIC_URL = "http://localhost:3000";
 
 // PROPS:
 // gameCode
@@ -14,24 +15,8 @@ class ImageDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      images: [],
+      images: this.props.images,
     };
-  }
-
-  componentDidMount() {
-    console.log("getting the images");
-    console.log(this.props.gameCode);
-    console.log(this.props.questionNum);
-    get("/api/images/", {
-      gameCode: this.props.gameCode,
-      questionNum: this.props.questionNum,
-    }).then((results) => {
-      console.log(results);
-      console.log("GOT THE IMAGES");
-      this.setState({
-        images: results,
-      });
-    });
   }
 
   hexToBase64 = (hexstring) => {

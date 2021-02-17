@@ -25,6 +25,7 @@ class QuestionPage extends Component {
       answers: new Array(this.props.questions.length).fill(""),
       time: this.props.time,
       reset: false,
+      images: [],
     };
 
     socket.on(`updateText:${this.props.teamName}:${this.props.gameCode}`, (newAns) => {
@@ -47,6 +48,22 @@ class QuestionPage extends Component {
         time: this.props.time,
         answers: new Array(this.props.questions.length).fill(""),
         reset: true,
+      });
+    });
+  }
+
+  componentDidMount() {
+    console.log("getting the images");
+    console.log(this.props.gameCode);
+    console.log(this.props.questionNumber);
+    get("/api/images/", {
+      gameCode: this.props.gameCode,
+      questionNum: this.props.questionNumber,
+    }).then((results) => {
+      console.log(results);
+      console.log("GOT THE IMAGES");
+      this.setState({
+        images: results,
       });
     });
   }
@@ -145,10 +162,15 @@ class QuestionPage extends Component {
       <>
         <h1> Question {this.props.questionNumber} </h1>
         <p> Time remaining: {this.state.time} </p>
-        <ImageDisplay gameCode={this.props.gameCode} questionNum={this.props.questionNumber} />
         {this.props.questions.map((singleQuestion, i) => (
           <div key={`question-${i}`}>
             <h2> Part {i + 1} </h2>
+            <ImageDisplay
+              gameCode={this.props.gameCode}
+              images={this.state.images.filter((elem) => {
+                return elem.partNum === i + 1;
+              })}
+            />
             <p> {singleQuestion} </p>
             <p> (worth {this.props.points[i]} points) </p>
             <textarea

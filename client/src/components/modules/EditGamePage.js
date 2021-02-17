@@ -53,7 +53,6 @@ class EditGamePage extends Component {
       alert("Input the teams that will be in this game");
       return;
     }
-    let adminPassword = this.makePassword();
     let questionPasswords = [];
     for (let i = 0; i < this.state.numQuestions; i++) {
       questionPasswords = questionPasswords.concat([this.makePassword()]);
@@ -65,7 +64,7 @@ class EditGamePage extends Component {
       times: this.state.times,
       points: this.state.points,
       teams: this.state.teams,
-      questionPasswords,
+      questionPasswords: questionPasswords,
     });
     this.setState({
       questionPasswords,
