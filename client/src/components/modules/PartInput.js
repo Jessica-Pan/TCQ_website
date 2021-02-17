@@ -24,7 +24,7 @@ class PartInput extends Component {
   render() {
     return (
       <>
-        <h3> Part {this.props.id} </h3>
+        <h3> Part {String.fromCharCode(this.props.id - 1 + "A".charCodeAt(0))} </h3>
         Points:
         <input
           className="small-text-box"

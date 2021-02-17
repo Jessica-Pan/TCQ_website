@@ -8,6 +8,7 @@ class ImageUpload extends React.Component {
     this.state = {
       file: null,
       part: null,
+      uploaded: [],
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -32,6 +33,11 @@ class ImageUpload extends React.Component {
       .post("/api/upload", formData, config)
       .then((response) => {
         alert("The file is successfully uploaded");
+        this.setState({
+          uploaded: this.state.uploaded.concat([
+            this.state.file.name + " for part " + this.state.part,
+          ]),
+        });
       })
       .catch((error) => {});
   }
@@ -44,12 +50,28 @@ class ImageUpload extends React.Component {
   };
 
   render() {
+    let uploaded = (
+      <p>
+        You've already uploaded:{" "}
+        <ul>
+          {this.state.uploaded.map((elem) => (
+            <li> {elem} </li>
+          ))}
+        </ul>
+      </p>
+    );
+    if (this.state.uploaded.length === 0) {
+      uploaded = <p> No images uploaded yet for this question. </p>;
+    }
     return (
-      <form className="u-flex u-flex-alignCenter" onSubmit={this.onFormSubmit}>
-        <h4 className="u-rightMargin">Image Upload </h4>
+      <form onSubmit={this.onFormSubmit}>
+        <h3 className="u-rightMargin">Image Upload for Question {this.props.questionNum} </h3>
+        <p> Part Number: </p>
         <input type="number" onChange={this.onChangePart} required />
+        <p> Input your image here: </p>
         <input type="file" name="myImage" onChange={this.onChange} required />
         <button type="submit">Upload</button>
+        {uploaded}
       </form>
     );
   }

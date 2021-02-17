@@ -171,7 +171,7 @@ class NewGame extends Component {
               <p> The password for this question is {this.state.questionPasswords[i]} </p>
               {question.map((singleQuestion, j) => (
                 <div key={`question-${i}-part-${j}`}>
-                  <h4> Part {j + 1}: </h4>
+                  <h4> Part {String.fromCharCode(i + "A".charCodeAt(0))}: </h4>
                   <p> Question: {singleQuestion} </p>
                   <p> This is worth {this.state.points[i][j]} points. </p>
                 </div>
