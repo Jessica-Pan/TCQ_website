@@ -62,8 +62,11 @@ class GraderPage extends Component {
   };
 
   handleAnswerInput = (answer, grade, i, partNum) => {
-    if (grade < 0 && grade > this.props.game.points[i][partNum]) {
-      alert("That is not a valid score. The max is " + this.props.game.points[i][partNum]);
+    const maximum = this.props.game.points[i][partNum];
+    if (grade < -maximum || grade > maximum) {
+      alert(
+        "That is not a valid score. The max is " + maximum + ", and the minimum is -" + maximum
+      );
       return;
     }
     console.log(
