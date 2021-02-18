@@ -156,12 +156,54 @@ class NewGame extends Component {
   //   this.setState({ images: images });
   // };
 
+  download = (data, filename, type) => {
+    var file = new Blob([data], { type: type });
+    if (window.navigator.msSaveOrOpenBlob) window.navigator.msSaveOrOpenBlob(file, filename);
+    else {
+      var a = document.createElement("a"),
+        url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  };
+
+  downloadAsTxt = () => {
+    let data = `You have made a new game!
+    \nThe code is: ${this.state.gameCode} \n
+    The admin password is: ${
+      this.state.adminPassword
+    } \nHere are all of the teams in this game: \n${this.state.teams.join(", ")} \n
+    Here are your questions and their passwords:`;
+    for (let i = 0; i < this.state.questions.length; i++) {
+      const question = this.state.questions[i];
+      data += `\nQuestion ${i + 1} \n  Students get ${
+        this.state.times[i]
+      } seconds to answer this question \nThe password for this question is ${
+        this.state.questionPasswords[i]
+      } \n
+      `;
+      for (let j = 0; j < question.length; j++) {
+        data += ` Part ${String.fromCharCode(j + "A".charCodeAt(0))}: \n 
+        Question: ${question[j]} \n
+        This is worth ${this.state.points[i][j]} points. \n`;
+      }
+    }
+    this.download(data, `${this.state.gameCode}-info.txt`, "txt");
+  };
+
   render() {
     if (this.state.submitted) {
       return (
         <>
-          You have made a new game! The code is {this.state.gameCode}. The admin password is{" "}
-          {this.state.adminPassword}.
+          You have made a new game!
+          <p> The code is: {this.state.gameCode} </p>{" "}
+          <p>The admin password is: {this.state.adminPassword} </p>
           <div> Here are all of the teams in this game: {this.state.teams.join(", ")} </div> Here
           are your questions and their passwords:
           {this.state.questions.map((question, i) => (
@@ -178,6 +220,7 @@ class NewGame extends Component {
               ))}
             </div>
           ))}
+          <button onClick={this.downloadAsTxt}> Download as a .txt file </button>
         </>
       );
     }
