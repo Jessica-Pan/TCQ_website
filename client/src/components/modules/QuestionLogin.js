@@ -3,6 +3,7 @@ import "../../utilities.css";
 import "../pages/LoginPages.css";
 
 // props:
+// name
 // password
 // questionNum
 // time
@@ -34,7 +35,9 @@ class QuestionLogin extends Component {
   render() {
     return (
       <>
-        <h1 className="title"> Question {this.props.questionNum} </h1>
+        <h1 className="title">
+          {this.props.name}: Question {this.props.questionNum}
+        </h1>
         <h3 className="standard-text u-textCenter"> Team: {this.props.teamName} </h3>
         <h3 className="standard-text u-textCenter"> Time: {this.props.time} seconds </h3>
         <div className="button-holder login-div">

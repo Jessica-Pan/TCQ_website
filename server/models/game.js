@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const GameSchema = new mongoose.Schema({
+  name: String,
   gameCode: String,
   parts: [Number],
   questions: [[String]],

@@ -95,7 +95,7 @@ class QuestionInput extends Component {
                 </span>
               </span>
             </span>
-            Time (in seconds):
+            Time (in minutes):
             <input
               className="small-text-box"
               type="number"

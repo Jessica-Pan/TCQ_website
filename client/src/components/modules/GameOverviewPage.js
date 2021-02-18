@@ -148,8 +148,8 @@ class GameOverviewPage extends Component {
     console.log(this.state.gradeTable);
     return (
       <>
-        Here is the information for the game with code {this.props.game.gameCode}. The admin
-        password is {this.props.game.adminPassword}.{" "}
+        Here is the information for the game "{this.props.game.name}". with code{" "}
+        {this.props.game.gameCode}. The admin password is {this.props.game.adminPassword}.{" "}
         <div> Here are all of the teams in this game: {this.props.game.teams.join(", ")} </div> Here
         are your questions and their passwords:
         {this.props.game.questions.map((question, i) => (

@@ -44,6 +44,7 @@ router.post("/textbox-update", (req, res) => {
 // takes the game code as the parameter code
 router.post("/new-game/", (req, res) => {
   const newGame = new Game({
+    name: req.body.name,
     gameCode: req.body.gameCode,
     parts: req.body.parts,
     questions: req.body.questions,

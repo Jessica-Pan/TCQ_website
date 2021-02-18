@@ -149,6 +149,7 @@ class QuestionPage extends Component {
         <>
           <QuestionLogin
             password={this.props.password}
+            name={this.props.name}
             questionNum={this.props.questionNumber}
             teamName={this.props.teamName}
             time={this.state.time}

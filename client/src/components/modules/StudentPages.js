@@ -67,6 +67,7 @@ class StudentPages extends Component {
     return (
       <QuestionPage
         gameCode={this.state.game.gameCode}
+        name={this.state.game.name}
         questionNumber={1 + i}
         teamName={this.state.teamName}
         parts={this.state.game.parts[i]}

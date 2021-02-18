@@ -1,5 +1,6 @@
 import React from "react";
 import "../../utilities.css";
+import "./ImageUpload.css";
 const axios = require("axios");
 
 class ImageUpload extends React.Component {
@@ -64,15 +65,17 @@ class ImageUpload extends React.Component {
       uploaded = <p> No images uploaded yet for this question. </p>;
     }
     return (
-      <form onSubmit={this.onFormSubmit}>
-        <h3 className="u-rightMargin">Image Upload for Question {this.props.questionNum} </h3>
-        <p> Part Number: </p>
-        <input type="number" onChange={this.onChangePart} required />
-        <p> Input your image here: </p>
-        <input type="file" name="myImage" onChange={this.onChange} required />
-        <button type="submit">Upload</button>
-        {uploaded}
-      </form>
+      <div className="border">
+        <form onSubmit={this.onFormSubmit}>
+          <h3 className="u-rightMargin">Image Upload for Question {this.props.questionNum} </h3>
+          <p> Part Number: </p>
+          <input type="number" onChange={this.onChangePart} required />
+          <p> Input your image here: </p>
+          <input type="file" name="myImage" onChange={this.onChange} required />
+          <button type="submit">Upload</button>
+          {uploaded}
+        </form>
+      </div>
     );
   }
 }

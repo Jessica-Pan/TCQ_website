@@ -126,8 +126,9 @@ class GraderPage extends Component {
     return (
       <>
         <h1>
-          {this.props.game.gameCode}: Question {this.state.questionNum}
+          {this.props.game.name}: {this.props.game.gameCode}
         </h1>
+        <h2>Question {this.state.questionNum}</h2>
         Question Number:
         <input
           className="small-text-box"

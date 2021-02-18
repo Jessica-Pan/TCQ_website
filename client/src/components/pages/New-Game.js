@@ -21,6 +21,7 @@ class NewGame extends Component {
       teams: [],
       images: [],
       gameCode: gameCode,
+      name: "Round 1",
     };
   }
 
@@ -59,6 +60,7 @@ class NewGame extends Component {
     }
     post("/api/new-game/", {
       gameCode: this.state.gameCode,
+      name: this.state.name,
       parts: this.state.parts,
       questions: this.state.questions,
       times: this.state.times,
@@ -121,7 +123,7 @@ class NewGame extends Component {
   changeTime = (questionNum, newTime) => {
     console.log(newTime);
     let newTimes = this.state.times;
-    newTimes[questionNum - 1] = newTime;
+    newTimes[questionNum - 1] = newTime * 60;
     this.setState({
       times: newTimes,
     });
@@ -150,6 +152,10 @@ class NewGame extends Component {
     this.setState({ teams: teams });
   };
 
+  handleChangeName = (event) => {
+    this.setState({ name: event.target.value });
+  };
+
   // enteredImage = (image, questionNum) => {
   //   let images = this.state.images;
   //   images.push([image, questionNum]);
@@ -174,27 +180,28 @@ class NewGame extends Component {
   };
 
   downloadAsTxt = () => {
-    let data = `You have made a new game!
-    \nThe code is: ${this.state.gameCode} \n
-    The admin password is: ${
+    let data = `You have made a new game: ${this.state.name}!\nThe code is: ${
+      this.state.gameCode
+    } \nThe admin password is: ${
       this.state.adminPassword
-    } \nHere are all of the teams in this game: \n${this.state.teams.join(", ")} \n
-    Here are your questions and their passwords:`;
+    } \nHere are all of the teams in this game: \n${this.state.teams.join(
+      ", "
+    )} \nHere are your questions and their passwords:`;
     for (let i = 0; i < this.state.questions.length; i++) {
       const question = this.state.questions[i];
-      data += `\nQuestion ${i + 1} \n  Students get ${
+      data += `\nQuestion ${i + 1} \n\nStudents get ${
         this.state.times[i]
       } seconds to answer this question \nThe password for this question is ${
         this.state.questionPasswords[i]
       } \n
       `;
       for (let j = 0; j < question.length; j++) {
-        data += ` Part ${String.fromCharCode(j + "A".charCodeAt(0))}: \n 
-        Question: ${question[j]} \n
-        This is worth ${this.state.points[i][j]} points. \n`;
+        data += ` Part ${String.fromCharCode(j + "A".charCodeAt(0))}: \nQuestion: ${
+          question[j]
+        } \nThis is worth ${this.state.points[i][j]} points. \n`;
       }
     }
-    this.download(data, `${this.state.gameCode}-info.txt`, "txt");
+    this.download(data, `${this.state.name}-${this.state.gameCode}-info.txt`, "txt");
   };
 
   render() {
@@ -202,6 +209,7 @@ class NewGame extends Component {
       return (
         <>
           You have made a new game!
+          <h1> {this.state.name} </h1>
           <p> The code is: {this.state.gameCode} </p>{" "}
           <p>The admin password is: {this.state.adminPassword} </p>
           <div> Here are all of the teams in this game: {this.state.teams.join(", ")} </div> Here
@@ -242,6 +250,14 @@ class NewGame extends Component {
     return (
       <>
         <h1 className="header"> New Game </h1>
+        <div className="u-flex-justifyCenter">
+          <input
+            className="small-text-box"
+            type="text"
+            value={this.state.name}
+            onChange={this.handleChangeName}
+          />
+        </div>
         <div className="New-Game-numQ">
           <span className="standard-text">Number of Questions:</span>
           <span className="New-Game-numQ-span">
