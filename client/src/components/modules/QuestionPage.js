@@ -161,11 +161,11 @@ class QuestionPage extends Component {
 
     return (
       <>
-        <h1> Question {this.props.questionNumber} </h1>
+        <h1> Question {String.fromCharCode(this.props.questionNumber - 1 + "A".charCodeAt(0))} </h1>
         <p> Time remaining: {this.state.time} </p>
         {this.props.questions.map((singleQuestion, i) => (
           <div key={`question-${i}`}>
-            <h2> Part {String.fromCharCode(i + "A".charCodeAt(0))} </h2>
+            <h2> Part {i + 1} </h2>
             <ImageDisplay
               gameCode={this.props.gameCode}
               images={this.state.images.filter((elem) => {

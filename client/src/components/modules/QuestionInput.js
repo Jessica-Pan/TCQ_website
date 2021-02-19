@@ -82,7 +82,10 @@ class QuestionInput extends Component {
         <div>
           <span className="standard-text">
             <span className="u-flex-space-between">
-              <h2 className="header-text"> Question {this.props.id}: </h2>
+              <h2 className="header-text">
+                {" "}
+                Question {String.fromCharCode(this.props.id - 1 + "A".charCodeAt(0))}:{" "}
+              </h2>
               <span className="New-Game-numQ">
                 <span className="standard-text">Number of Parts:</span>
                 <span className="New-Game-numQ-span">
@@ -95,7 +98,7 @@ class QuestionInput extends Component {
                 </span>
               </span>
             </span>
-            Time (in minutes):
+            Time (in seconds):
             <input
               className="small-text-box"
               type="number"

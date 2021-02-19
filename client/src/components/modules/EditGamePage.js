@@ -154,7 +154,7 @@ class EditGamePage extends Component {
           are your questions and their passwords:
           {this.state.questions.map((question, i) => (
             <div key={`question-overview-${i}`}>
-              <h2> Question {i + 1}: </h2>
+              <h2> Question {String.fromCharCode(i + "A".charCodeAt(0))}: </h2>
               <p> Students get {this.state.times[i]} seconds to answer this question </p>
               <p> The password for this question is {this.state.questionPasswords[i]} </p>
               {question.map((singleQuestion, j) => (

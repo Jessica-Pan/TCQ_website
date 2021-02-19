@@ -20,13 +20,14 @@ class GameOverviewPage extends Component {
 
   getGrades = () => {
     console.log("getting the grades");
-    let questionHeaders = "";
+    let questionHeaders = "Team";
     for (let i = 0; i < this.props.game.questions.length; i++) {
       for (let j = 0; j < this.props.game.questions[i].length; j++) {
-        questionHeaders += `\tQuestion-${i + 1}-part-${j + 1}`;
+        questionHeaders += `,Question-${i + 1}-part-${j + 1}`;
       }
+      questionHeaders += `,Question-${i + 1}-total`;
     }
-    questionHeaders += "\tTotal Score";
+    questionHeaders += ",Total Score";
     get("/api/grades", { gameCode: this.props.game.gameCode }).then((results) => {
       console.log("got the grades");
       console.log(results);
@@ -70,6 +71,7 @@ class GameOverviewPage extends Component {
           let total = 0;
           console.log(teamArray);
           for (let i = 0; i < answerDict[key].length; i++) {
+            let questionTotal = 0;
             // console.log(answerDict[key][i]);
             if (Array.isArray(answerDict[key][i])) {
               for (let j = 0; j < answerDict[key][i].length; j++) {
@@ -79,8 +81,10 @@ class GameOverviewPage extends Component {
                 if (!isNaN(toAdd)) {
                   //   console.log("not a nan");
                   total += toAdd;
+                  questionTotal += toAdd;
                 }
               }
+              teamArray.push(questionTotal);
             } else {
               const toAdd = parseInt(answerDict[key][i]);
               teamArray.push(toAdd);
@@ -89,12 +93,13 @@ class GameOverviewPage extends Component {
                 //   console.log("not a nan");
                 total += toAdd;
               }
+              teamArray.push(toAdd);
             }
             // console.log(total);
           }
           teamArray.push(total);
           //   console.log(teamArray);
-          answerTable.push(teamArray.join("\t"));
+          answerTable.push(teamArray.join(","));
         }
       }
       let answerTableString = answerTable.join("\n");
@@ -128,15 +133,16 @@ class GameOverviewPage extends Component {
   };
 
   toHTMLTable = (array) => {
+    console.log(array[0]);
     return (
       <table>
-        {array[0].split("\t").map((elem) => (
+        {array[0].split(",").map((elem) => (
           <th> {elem} </th>
         ))}
         {array.slice(1).map((line) => (
           <tr>
-            {line.split("\t").map((elem) => (
-              <td> {elem} </td>
+            {line.split(",").map((elem) => (
+              <td> {isNaN(elem) ? "NG" : elem} </td>
             ))}
           </tr>
         ))}
@@ -154,7 +160,7 @@ class GameOverviewPage extends Component {
         are your questions and their passwords:
         {this.props.game.questions.map((question, i) => (
           <div key={`question-overview-${i}`}>
-            <h2> Question {i + 1}: </h2>
+            <h2> Question {String.fromCharCode(i + "A".charCodeAt(0))}: </h2>
             <p> Students get {this.props.game.times[i]} seconds to answer this question </p>
             <p> The password for this question is {this.props.game.questionPasswords[i]} </p>
             {question.map((singleQuestion, j) => (

@@ -36,7 +36,8 @@ class QuestionLogin extends Component {
     return (
       <>
         <h1 className="title">
-          {this.props.name}: Question {this.props.questionNum}
+          {this.props.name}: Question{" "}
+          {String.fromCharCode(this.props.questionNum - 1 + "A".charCodeAt(0))}
         </h1>
         <h3 className="standard-text u-textCenter"> Team: {this.props.teamName} </h3>
         <h3 className="standard-text u-textCenter"> Time: {this.props.time} seconds </h3>

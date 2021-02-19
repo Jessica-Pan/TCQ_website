@@ -67,7 +67,10 @@ class ImageUpload extends React.Component {
     return (
       <div className="border">
         <form onSubmit={this.onFormSubmit}>
-          <h3 className="u-rightMargin">Image Upload for Question {this.props.questionNum} </h3>
+          <h3 className="u-rightMargin">
+            Image Upload for Question{" "}
+            {String.fromCharCode(this.props.questionNum - 1 + "A".charCodeAt(0))}
+          </h3>
           <p> Part Number: </p>
           <input type="number" onChange={this.onChangePart} required />
           <p> Input your image here: </p>

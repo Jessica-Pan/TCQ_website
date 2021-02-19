@@ -42,7 +42,9 @@ class ProctorPage extends Component {
           <div key={`answerObject-${i}`}>
             <h2> {answerObj.team} </h2>
             <p>
-              Started Question {answerObj.questionNumber} at {answerObj.startTime}{" "}
+              Started Question{" "}
+              {String.fromCharCode(answerObj.questionNumber - 1 + "A".charCodeAt(0))} at{" "}
+              {answerObj.startTime}{" "}
             </p>
           </div>
         ))}
