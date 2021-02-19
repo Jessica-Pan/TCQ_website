@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import "./GameOverviewPage.css";
+import "../pages/LoginPages.css";
+
 import { get, post } from "../../utilities.js";
 
 // prop: game: the game object
@@ -150,6 +153,15 @@ class GameOverviewPage extends Component {
     );
   };
 
+  deleteGame = () => {
+    if (confirm("Once you delete this game, there is no way to get it or its data back.")) {
+      post("/api/delete-game", { gameCode: this.props.game.gameCode });
+      alert(
+        "The game has been deleted. Once you leave this page, there will be no way to retrieve this data."
+      );
+    }
+  };
+
   render() {
     console.log(this.state.gradeTable);
     return (
@@ -175,6 +187,10 @@ class GameOverviewPage extends Component {
         <button onClick={this.getGrades}> Show grades </button>
         {this.toHTMLTable(this.state.gradeTable)}
         <button onClick={this.handleDownload}> Download </button>
+        <p> </p>
+        <span className="button delete" onClick={this.deleteGame}>
+          <span className="delete-text button-text"> Delete this game </span>
+        </span>
       </>
     );
   }

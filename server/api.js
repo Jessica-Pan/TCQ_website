@@ -98,6 +98,20 @@ router.post("/start-time/", (req, res) => {
   });
 });
 
+router.post("/delete-game", (req, res) => {
+  console.log("deleting the game " + req.body.gameCode);
+  Answer.deleteMany({ gameCode: req.body.gameCode }).then((answers) => {
+    console.log(`deleted ${answers.length} answers.`);
+  });
+  Image.deleteMany({ gameCode: req.body.gameCode }).then((image) => {
+    console.log(`deleted ${image.length} images.`);
+  });
+  Game.deleteOne({ gameCode: req.body.gameCode }).then((game) => {
+    console.log(`deleted the game.`);
+  });
+  res.sendStatus(204).end();
+});
+
 router.post("/proct-reset", (req, res) => {
   console.log("in proct reset post");
   socketManager.proctResetTime(req.body.gameCode, req.body.teamName);
